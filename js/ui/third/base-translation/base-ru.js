@@ -467,6 +467,8 @@ const base_ru = {
 "editingMode":"Режим редактирования",
 "canvasBG":"Фон холста",
 "downloadDpi":"Скачать DPI",
+"outputImageFormat":"Формат экспорта",
+"outputImageQuality":"Качество экспорта",
 "gridLine":"Сетка (Ctrl+G)",
 "gridLineSize":"Размер сетки",
 "marginFromPanel":"Отступ от панели",

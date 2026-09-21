@@ -393,6 +393,8 @@ const base_de = {
 "discord":"Discord",
 "dotScreen":"Punktraster",
 "downloadDpi":"DPI-Download",
+"outputImageFormat":"Exportformat",
+"outputImageQuality":"Exportqualität",
 "drawMode":"Zeichenmodus",
 "edgeWork":"Kantenerkennung",
 "editingMode":"Bearbeitungsmodus",

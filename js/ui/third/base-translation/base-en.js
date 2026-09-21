@@ -473,6 +473,8 @@ const base_en = {
 "editingMode":"Editing Mode",
 "canvasBG":"Canvas BG",
 "downloadDpi":"Download Dpi",
+"outputImageFormat":"Export format",
+"outputImageQuality":"Export quality",
 "gridLine":"Grid Line (Ctrl+G)",
 "gridLineSize":"Grid Line Size",
 "marginFromPanel":"Margin From Panel",

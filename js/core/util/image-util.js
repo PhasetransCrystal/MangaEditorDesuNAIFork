@@ -1,5 +1,14 @@
 // image-util.js - Fabric.js画像オブジェクトの処理（変換、WebP、クロップ、反転、色変換など）
 
+// 导出上限。输出像素超过这些值时按比例回退，避免导出图体积无限膨胀。
+// EXPORT_MAX_EDGE: 长边像素上限 / EXPORT_MAX_PIXELS: 总像素上限
+var EXPORT_MAX_EDGE=8192;
+var EXPORT_MAX_PIXELS=40*1000*1000;
+var EXPORT_FORMATS=['png','jpeg','webp'];
+var EXPORT_QUALITY_MIN=0.5;
+var EXPORT_QUALITY_MAX=0.98;
+var EXPORT_QUALITY_DEFAULT=0.92;
+
 var ImageUtil={
 createCanvasFromFabricImage:function(fabricImage){
 var tempCanvas=document.createElement('canvas');
@@ -360,11 +369,64 @@ return null;
 },
 
 canvas2DataURL:function(multiplier,format){
-return canvas.toDataURL({format:format,multiplier:multiplier});
+return ImageUtil.exportCanvasDataURL(multiplier,format);
 },
 
-getCropAndDownloadLinkByMultiplier:function(multiplier,format){
-var cropped=canvas.toDataURL({format:format,multiplier:multiplier});
+resolveExportFormat:function(format){
+format=String(format||'').toLowerCase();
+if(format==='jpg')format='jpeg';
+return EXPORT_FORMATS.indexOf(format)>=0?format:'png';
+},
+
+normalizeExportQuality:function(quality){
+var value=parseFloat(quality);
+if(!isFinite(value))value=EXPORT_QUALITY_DEFAULT;
+// 1 より大きい値はパーセント指定（例: 92 → 0.92）として扱う。
+if(value>1)value=value/100;
+if(!isFinite(value))value=EXPORT_QUALITY_DEFAULT;
+if(value<EXPORT_QUALITY_MIN)value=EXPORT_QUALITY_MIN;
+if(value>EXPORT_QUALITY_MAX)value=EXPORT_QUALITY_MAX;
+return value;
+},
+
+// multiplier を上限つきで解決する。長辺・総ピクセルの両方を超えないよう縮小する。
+resolveExportMultiplier:function(multiplier,width,height){
+var m=parseFloat(multiplier);
+if(!isFinite(m)||m<=0)m=1;
+var baseWidth=Math.max(1,width||canvas.width);
+var baseHeight=Math.max(1,height||canvas.height);
+var w=baseWidth*m;
+var h=baseHeight*m;
+var shrink=1;
+if(Math.max(w,h)>EXPORT_MAX_EDGE)shrink=Math.min(shrink,EXPORT_MAX_EDGE/Math.max(w,h));
+if(w*h>EXPORT_MAX_PIXELS)shrink=Math.min(shrink,Math.sqrt(EXPORT_MAX_PIXELS/(w*h)));
+// ブラウザ側の丸めで上限を僅かに超えないよう、長辺 1px 分の余裕を取る。
+var safe=m*shrink;
+if(shrink<1)safe=safe*(1-1/Math.max(baseWidth,baseHeight));
+return safe;
+},
+
+// 画面全体を指定形式で書き出す。quality は jpeg/webp のみ有効。
+exportCanvasDataURL:function(multiplier,format,quality){
+var normalizedFormat=ImageUtil.resolveExportFormat(format);
+var safeMultiplier=ImageUtil.resolveExportMultiplier(multiplier);
+ImageUtil.lastExportWasCapped=safeMultiplier<multiplier-1e-9;
+var options={format:normalizedFormat,multiplier:safeMultiplier};
+if(normalizedFormat!=='png')options.quality=ImageUtil.normalizeExportQuality(quality);
+return canvas.toDataURL(options);
+},
+
+// 上限に当たって解像度が落ちたときだけ利用者に知らせる。二重表示はしない。
+notifyExportLimitReached:function(){
+if(!ImageUtil.lastExportWasCapped)return;
+ImageUtil.lastExportWasCapped=false;
+if(typeof createToast!=='function')return;
+createToast('导出上限','已按上限自动缩小导出尺寸以免文件过大。可在「画布 → 下载 DPI / 导出格式」调整。',5000);
+},
+
+getCropAndDownloadLinkByMultiplier:function(multiplier,format,quality){
+var normalizedFormat=ImageUtil.resolveExportFormat(format);
+var cropped=ImageUtil.exportCanvasDataURL(multiplier,normalizedFormat,quality);
 function getFormattedDateTime(){
 var date=new Date();
 var yyyy=date.getFullYear();
@@ -377,12 +439,13 @@ var SSS=('00'+date.getMilliseconds()).slice(-3);
 return yyyy+MM+dd+'_'+hh+mm+ss+'_'+SSS;
 }
 var link=document.createElement('a');
-link.download='DESU-nai学长魔改-'+getFormattedDateTime()+'.'+format;
+link.download='DESU-nai学长魔改-'+getFormattedDateTime()+'.'+normalizedFormat;
 link.href=cropped;
 return link;
 },
 
-getCropAndDownloadLink:function(){
+// forcedFormat を渡すと UI の形式選択を無視する（クリップボード等の固定形式用）。
+getCropAndDownloadLink:function(forcedFormat){
 var a5WidthInches=148/25.4;
 var a5HeightInches=210/25.4;
 var dpi=parseFloat($('outputDpi').value);
@@ -397,12 +460,16 @@ targetHeightPixels=a5WidthInches*dpi;
 var multiplierWidth=targetWidthPixels/canvasWidthPixels;
 var multiplierHeight=targetHeightPixels/canvasHeightPixels;
 var multiplier=Math.max(multiplierWidth,multiplierHeight);
-return ImageUtil.getCropAndDownloadLinkByMultiplier(multiplier,'png');
+var formatElement=$('outputImageFormat');
+var qualityElement=$('outputImageQuality');
+var format=forcedFormat||(formatElement?formatElement.value:'png');
+var quality=qualityElement?qualityElement.value:EXPORT_QUALITY_DEFAULT;
+return ImageUtil.getCropAndDownloadLinkByMultiplier(multiplier,format,quality);
 },
 
 clipCopy:function(){
 removeGrid();
-var link=ImageUtil.getCropAndDownloadLink();
+var link=ImageUtil.getCropAndDownloadLink('png');
 function restoreGrid(){
 if(isGridVisible){
 drawGrid();
@@ -432,6 +499,7 @@ cropAndDownload:function(){
 removeGrid();
 var link=ImageUtil.getCropAndDownloadLink();
 link.click();
+ImageUtil.notifyExportLimitReached();
 if(isGridVisible){
 drawGrid();
 isGridVisible=true;
@@ -541,6 +609,10 @@ var enhanceDarkImage=ImageUtil.enhanceDarkImage;
 var sendHtmlCanvas2FabricCanvas=ImageUtil.sendHtmlCanvas2FabricCanvas;
 var blobUrlToDataUrl=ImageUtil.blobUrlToDataUrl;
 var canvas2DataURL=ImageUtil.canvas2DataURL;
+var resolveExportFormat=ImageUtil.resolveExportFormat;
+var normalizeExportQuality=ImageUtil.normalizeExportQuality;
+var resolveExportMultiplier=ImageUtil.resolveExportMultiplier;
+var exportCanvasDataURL=ImageUtil.exportCanvasDataURL;
 var getCropAndDownloadLinkByMultiplier=ImageUtil.getCropAndDownloadLinkByMultiplier;
 var getCropAndDownloadLink=ImageUtil.getCropAndDownloadLink;
 var clipCopy=ImageUtil.clipCopy;

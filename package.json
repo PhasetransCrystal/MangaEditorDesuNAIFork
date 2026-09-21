@@ -27,6 +27,7 @@
     "test:proxy-guards": "python scripts/proxy-guard-smoke-test.py",
     "test:layout": "node scripts/layout-smoke-test.cjs",
     "test:page-size": "node scripts/manga-page-size-smoke-test.cjs"
+    ,"test:image-export": "node scripts/image-export-smoke-test.cjs"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

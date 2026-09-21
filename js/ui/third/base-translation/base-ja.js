@@ -398,6 +398,8 @@ const base_ja = {
 "discord":"Discord",
 "dotScreen":"ドットスクリーン",
 "downloadDpi":"DPIダウンロード",
+"outputImageFormat":"出力形式",
+"outputImageQuality":"出力品質",
 "drawMode":"描画モード",
 "edgeWork":"エッジワーク",
 "editingMode":"編集モード",

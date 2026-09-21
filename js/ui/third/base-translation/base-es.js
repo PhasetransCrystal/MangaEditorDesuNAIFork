@@ -466,6 +466,8 @@ const base_es = {
 "editingMode":"Modo de edición",
 "canvasBG":"Fondo del lienzo",
 "downloadDpi":"Descargar DPI",
+"outputImageFormat":"Formato de exportación",
+"outputImageQuality":"Calidad de exportación",
 "gridLine":"Línea de cuadrícula (Ctrl+G)",
 "gridLineSize":"Tamaño de la línea de cuadrícula",
 "marginFromPanel":"Margen desde el panel",

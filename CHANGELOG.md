@@ -2,6 +2,13 @@
 
 Version numbers apply to **this fork only**, not to upstream Manga Editor Desu.
 
+## Unreleased
+
+- Add 画布 → 导出格式 (PNG / JPEG / WebP) and 导出品质 so a finished page can be saved as a compressed image instead of a multi-hundred-megabyte PNG.
+- Bound export size: the longest edge is capped at 8192px and the total at 40MP, so an oversized 下载 DPI no longer produces a failure-prone, gigantic file. Exports that hit the cap show a toast.
+- 下载 DPI now has a maximum of 1800 in the UI, and its stored default matches the 300 shown in the menu.
+- The project preview thumbnail is written as JPEG at quality 0.8 instead of the implicit 1.0, shrinking saved `.lz4` projects.
+
 ## 1.0.3 — 2026-08-31
 
 - Empty-canvas overlay can be dismissed (× / 自己裁剪 / Esc) and is remembered; it no longer blocks custom pages.

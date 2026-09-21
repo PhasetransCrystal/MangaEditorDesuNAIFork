@@ -187,7 +187,24 @@ $('bg-color').addEventListener('input',function (event) {
 resizableContainer=getCanvasViewParent();
 });
 resizableContainer=getCanvasViewParent();
+syncExportQualityAvailability();
 });
+
+// PNG はロスレスなので品質は効かない。選べないことが分かるように無効化する。
+function syncExportQualityAvailability(){
+var formatElement=$('outputImageFormat');
+var qualityElement=$('outputImageQuality');
+if(!formatElement||!qualityElement)return;
+var update=function(){
+var lossless=typeof resolveExportFormat==='function'
+? resolveExportFormat(formatElement.value)==='png'
+: formatElement.value==='png';
+qualityElement.disabled=lossless;
+qualityElement.title=lossless?'PNG 是无损格式，品质设置不生效。':'JPEG / WebP 的压缩品质。';
+};
+formatElement.addEventListener('change',update);
+update();
+}
 
 
 let canvasContinerScale=1;

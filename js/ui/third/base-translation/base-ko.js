@@ -468,6 +468,8 @@ const base_ko = {
 "editingMode":"편집 모드",
 "canvasBG":"캔버스 배경",
 "downloadDpi":"DPI 다운로드",
+"outputImageFormat":"내보내기 형식",
+"outputImageQuality":"내보내기 품질",
 "gridLine":"격자선 (Ctrl+G)",
 "gridLineSize":"격자선 크기",
 "marginFromPanel":"패널에서의 여백",

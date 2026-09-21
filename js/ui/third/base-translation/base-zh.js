@@ -479,6 +479,8 @@ const base_zh = {
 "editingMode":"编辑模式",
 "canvasBG":"画布背景",
 "downloadDpi":"下载DPI",
+"outputImageFormat":"导出格式",
+"outputImageQuality":"导出品质",
 "gridLine":"网格线 (Ctrl+G)",
 "gridLineSize":"网格线大小",
 "marginFromPanel":"面板边距",

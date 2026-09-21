@@ -468,6 +468,8 @@ const base_fr = {
 "editingMode":"Mode Édition",
 "canvasBG":"Fond de Toile",
 "downloadDpi":"Télécharger DPI",
+"outputImageFormat":"Format d'export",
+"outputImageQuality":"Qualité d'export",
 "gridLine":"Ligne de Grille (Ctrl+G)",
 "gridLineSize":"Taille de la Ligne de Grille",
 "marginFromPanel":"Marge du Panneau",
