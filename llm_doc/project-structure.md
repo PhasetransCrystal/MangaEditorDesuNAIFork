@@ -82,3 +82,19 @@ new fabric.Canvas("mangaImageCanvas",{
 9. simulator/local-tools 扩展（依赖 Canvas、历史和 UI）
 10. auto-save, compression
 11. font, service worker
+
+## 起動スクリプト（一键启动）
+
+入口は 3 段。ユーザーが触るのは `一键启动.bat` だけ。
+
+| ファイル | 役割 |
+|---------|------|
+| `一键启动.bat` | 入口。**ASCII のみ**で書く（コードページ切替をまたぐと cmd.exe がバイト位置ずれを起こし、非 ASCII 行を壊して別コマンドとして実行してしまう） |
+| `start_manga_editor_nai.bat` | `powershell.exe -STA -File start_manga_editor_nai.ps1` を呼ぶ。他のスクリプトからも呼べる |
+| `start_manga_editor_nai.ps1` | 本体。中国語 UI 文言はすべてここ（UTF-8 BOM 付き）に置く |
+
+- サービスは**同じコンソールのフォアグラウンド**で動く。ウィンドウは閉じない。
+- 就緒後に `http://127.0.0.1:8000/index.html#` をブラウザで開く（`-NoBrowser` で抑止、`-NoPrompt` でダイアログ抑止）。
+- 子プロセスは **Windows Job Object**（`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`）+ `taskkill /T /F` で管理。ウィンドウを閉じると python も終了しポート 8000 が解放される。
+- 8000 が既に本機サービスなら**ブラウザだけ**開き、他人のプロセスは殺さない。別プログラムが占めている場合は友好なエラーを出して終了コード 1。
+- `NAI_QUIET=1` を付けて起動するのでアクセスログは出ない（未設定時は従来どおり）。失敗時は `user_data\start.log`。

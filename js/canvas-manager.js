@@ -98,6 +98,8 @@ initialCanvasHeight=canvas.getHeight();
 aspectRatio=initialCanvasWidth/initialCanvasHeight;
 canvas.renderAll();
 fitCanvasViewToContainer(true);
+syncExportPagePlan();
+scheduleExportSizeEstimate();
 }
 
 function resizeCanvas(newWidth,newHeight) {
@@ -136,6 +138,8 @@ obj.setCoords();
 });
 canvas.renderAll();
 fitCanvasViewToContainer(true);
+syncExportPagePlan();
+scheduleExportSizeEstimate();
 }
 
 function forcedAdjustCanvasSize() {
@@ -176,19 +180,226 @@ aspectRatio=initialCanvasWidth/initialCanvasHeight;
 canvas.renderAll();
 viewUserScale=1;
 fitCanvasViewToContainer(true);
+syncExportPagePlan();
+scheduleExportSizeEstimate();
 }
 
 document.addEventListener('DOMContentLoaded',function() {
 $('bg-color').addEventListener('input',function (event) {
 var color=event.target.value;
 canvas.setBackgroundColor(color,canvas.renderAll.bind(canvas));
+syncExportBackgroundLabel();
 });
 $('bg-color').addEventListener('input',function (event) {
 resizableContainer=getCanvasViewParent();
 });
 resizableContainer=getCanvasViewParent();
+bindExportBackgroundButton();
+syncExportBackgroundLabel();
+syncExportBitDepthState();
 syncExportQualityAvailability();
+syncExportPagePlan();
+syncExportSizeEstimate();
 });
+
+// 画布背景の入力本体は 1px の不可視入力なので、行のボタンからピッカーを開く。
+function bindExportBackgroundButton(){
+var picker=$('bg-color');
+var button=$('bgColorButton');
+if(!picker||!button||button.dataset.pickerBound==='1')return;
+button.dataset.pickerBound='1';
+var open=function(event){
+if(event){event.preventDefault();event.stopPropagation();}
+if(picker.jscolor&&typeof picker.jscolor.show==='function')picker.jscolor.show();
+};
+button.addEventListener('click',open);
+button.addEventListener('mousedown',function(event){event.preventDefault();event.stopPropagation();});
+}
+
+// 画布背景の六十六進値ラベルと色の四角形を同期する。
+function formatExportColorHex(color){
+if(typeof rgbToHex==='function'){
+return rgbToHex(String(color||'')).toUpperCase();
+}
+return String(color||'').toUpperCase();
+}
+
+function syncExportBackgroundLabel(){
+var picker=$('bg-color');
+var label=$('bgColorValue');
+if(!picker)return;
+var hex=formatExportColorHex(picker.value);
+if(label)label.textContent=hex;
+var preview=$('bgColorSwatch');
+if(preview)preview.style.backgroundColor=hex;
+}
+
+// 位深度は PNG のときだけ有効。jpeg/webp では無効だと分かるようにする。
+function syncExportBitDepthState(){
+var formatElement=$('outputImageFormat');
+var bitDepthElement=$('outputBitDepth');
+if(!formatElement||!bitDepthElement)return;
+var update=function(){
+var isPng=typeof resolveExportFormat==='function'
+? resolveExportFormat(formatElement.value)==='png'
+: formatElement.value==='png';
+bitDepthElement.disabled=!isPng;
+bitDepthElement.title=isPng?'PNG 实际写出的位深度。灰度 / 24位 RGB 会丢弃透明度。':'当前输出格式不是 PNG，位深度不生效。';
+var hint=$('outputBitDepthHint');
+if(hint)hint.style.display=isPng?'':'none';
+syncExportPagePlan();
+};
+formatElement.addEventListener('change',update);
+update();
+}
+
+var exportPagePlanSyncing=false;
+var exportPixelRevertTimer=null;
+
+function currentExportDpi(){
+var element=$('outputDpi');
+return typeof NaiMangaPageSize!=='undefined'
+?NaiMangaPageSize.resolveExportDpi(element?element.value:300)
+:parseFloat(element?element.value:300)||300;
+}
+
+function setExportDpi(value){
+var element=$('outputDpi');
+if(!element)return;
+element.value=String(value);
+}
+
+function currentCanvasSizeForPreview(){
+var width=Math.max(1,Math.round(
+typeof canvas!=='undefined'&&canvas?canvas.getWidth():1654
+));
+var height=Math.max(1,Math.round(
+typeof canvas!=='undefined'&&canvas?canvas.getHeight():2339
+));
+return {width:width,height:height};
+}
+
+// 横/竖それぞれの mm 寸法から、その向きの実出力画素を返す。
+function exportPlanForOrientation(dpi,landscape){
+if(typeof NaiMangaPageSize==='undefined')return null;
+var mm=landscape?NaiMangaPageSize.PAGE_MM.landscape:NaiMangaPageSize.PAGE_MM.portrait;
+return NaiMangaPageSize.planExportPage(dpi,mm.width,mm.height);
+}
+
+// 出力画素のプレビュー。編集中の欄には触らない。
+// force を渡すとフォーカス中でも書き換える（入力が受け付けられなかった時用）。
+function updateExportPagePlanDisplay(dpi,force){
+if(typeof NaiMangaPageSize==='undefined')return;
+var active=force?null:document.activeElement;
+[false,true].forEach(function(landscape){
+var plan=exportPlanForOrientation(dpi,landscape);
+if(!plan)return;
+var prefix=landscape?'exportPxLandscape':'exportPxPortrait';
+var widthField=$(prefix+'Width');
+var heightField=$(prefix+'Height');
+if(widthField&&active!==widthField)widthField.value=plan.width;
+if(heightField&&active!==heightField)heightField.value=plan.height;
+});
+var note=$('exportPxCappedNote');
+var portraitPlan=exportPlanForOrientation(dpi,false);
+if(note)note.style.display=(portraitPlan&&portraitPlan.capped)?'':'none';
+}
+
+function syncExportPagePlan(){
+if(typeof NaiMangaPageSize==='undefined')return;
+if(exportPagePlanSyncing)return;
+exportPagePlanSyncing=true;
+try{
+updateExportPagePlanDisplay(currentExportDpi());
+}finally{
+exportPagePlanSyncing=false;
+}
+}
+
+// 画素欄の編集から DPI を逆算し、他の欄とプレビューを追隨させる。
+// 各欄の data-edge と向きから、下地寸法のどちらの軸かを一意に決める。
+function applyExportPixelEdge(input){
+if(exportPagePlanSyncing)return;
+if(!input)return;
+if(typeof NaiMangaPageSize==='undefined')return;
+var typed=Math.round(parseFloat(input.value));
+if(!isFinite(typed)||typed<=0){
+syncExportPagePlan();
+return;
+}
+clearExportPixelRevert();
+var size=currentCanvasSizeForPreview();
+var landscape=input.id.indexOf('Landscape')>=0;
+var isWidth=input.getAttribute('data-edge')==='width';
+// 横向きの幅は長辺、縦向きの高さが長辺。それ以外は短辺として扱う。
+var longEdgeIsWidth=landscape;
+var useShortEdge=isWidth?!longEdgeIsWidth:longEdgeIsWidth;
+var dpi=NaiMangaPageSize.resolveDpiForPixelEdge(size.width,size.height,typed,useShortEdge);
+if(dpi===null){
+syncExportPagePlan();
+// 打鍵の途中で毎回戻すと入力できないので、手が止まってから元の計画値へ戻す。
+scheduleExportPixelRevert(input);
+return;
+}
+clearExportPixelRevert();
+setExportDpi(dpi);
+exportPagePlanSyncing=true;
+try{
+updateExportPagePlanDisplay(dpi);
+scheduleExportSizeEstimate();
+}finally{
+exportPagePlanSyncing=false;
+}
+}
+
+function clearExportPixelRevert(){
+if(exportPixelRevertTimer){
+clearTimeout(exportPixelRevertTimer);
+exportPixelRevertTimer=null;
+}
+}
+
+// 範囲外の値を手が止まった頃に計画値へ戻す。
+function scheduleExportPixelRevert(input){
+clearExportPixelRevert();
+exportPixelRevertTimer=setTimeout(function(){
+exportPixelRevertTimer=null;
+updateExportPagePlanDisplay(currentExportDpi(),true);
+if(input.dataset.planRejectNotified!=='1'){
+input.dataset.planRejectNotified='1';
+var size=currentCanvasSizeForPreview();
+var capLong=NaiMangaPageSize.exportMaxLongEdge(Math.max(size.width,size.height),Math.min(size.width,size.height));
+if(typeof createToastError==='function'){
+createToastError('画布像素','输入的像素超出输出范围。画布最长边最多约 '+capLong+' 像素（输出上限）。',5000);
+}
+}
+},800);
+}
+
+function bindExportPagePlanEvents(){
+var dpiElement=$('outputDpi');
+if(dpiElement&&dpiElement.dataset.planBound!=='1'){
+dpiElement.dataset.planBound='1';
+dpiElement.addEventListener('input',function(){
+syncExportPagePlan();
+scheduleExportSizeEstimate();
+});
+dpiElement.addEventListener('change',function(){
+var normalized=currentExportDpi();
+if(dpiElement.value!==String(normalized))dpiElement.value=String(normalized);
+syncExportPagePlan();
+scheduleExportSizeEstimate();
+});
+}
+['exportPxPortraitWidth','exportPxPortraitHeight','exportPxLandscapeWidth','exportPxLandscapeHeight'].forEach(function(id){
+var element=$(id);
+if(!element||element.dataset.planBound==='1')return;
+element.dataset.planBound='1';
+element.addEventListener('input',function(){applyExportPixelEdge(element);});
+// 無効な値を書き戻した後は、次の入力で通知を出し直せる。
+element.addEventListener('blur',function(){delete element.dataset.planRejectNotified;});
+});
+}
 
 // PNG はロスレスなので品質は効かない。選べないことが分かるように無効化する。
 function syncExportQualityAvailability(){
@@ -201,11 +412,105 @@ var lossless=typeof resolveExportFormat==='function'
 : formatElement.value==='png';
 qualityElement.disabled=lossless;
 qualityElement.title=lossless?'PNG 是无损格式，品质设置不生效。':'JPEG / WebP 的压缩品质。';
+syncExportSizeEstimate();
 };
 formatElement.addEventListener('change',update);
 update();
 }
 
+// 出力サイズの概算表示。実際に数タイル書き出すため重い。連打と編集中の連続更新を避けるため遅延させる。
+var exportEstimateTimer=null;
+var exportEstimateRunning=false;
+var exportEstimatePending=false;
+
+function renderExportSizeEstimate(){
+var label=$('outputImageEstimate');
+if(!label)return;
+if(typeof estimateExportSize!=='function'||typeof formatByteSize!=='function'){
+label.textContent='-';
+return;
+}
+if(exportEstimateRunning){
+exportEstimatePending=true;
+return;
+}
+var formatElement=$('outputImageFormat');
+var qualityElement=$('outputImageQuality');
+var dpiElement=$('outputDpi');
+var dpi=parseFloat(dpiElement?dpiElement.value:300);
+if(!isFinite(dpi)||dpi<=0){
+label.textContent='-';
+label.title='';
+return;
+}
+var format=formatElement?formatElement.value:'png';
+var quality=qualityElement?qualityElement.value:0.92;
+var multiplier=resolveExportMultiplierForDpi(dpi,canvas.width,canvas.height);
+label.textContent='计算中…';
+exportEstimateRunning=true;
+// 直前の描画を先に反映させてから、同期処理の書き出しに入る。
+setTimeout(function(){
+var result=null;
+try{
+result=estimateExportSize(format,quality,multiplier,canvas.width,canvas.height);
+}catch(error){
+result=null;
+}
+exportEstimateRunning=false;
+var node=$('outputImageEstimate');
+if(!node)return;
+if(!result){
+node.textContent='-';
+node.title='画布尺寸无法用于估算。';
+}else{
+var isUpperBound=result.upperBound!==null&&result.upperBound!==undefined;
+node.textContent=(isUpperBound?'至多 ':'')+formatByteSize(result.bytes)+(isUpperBound?'':' 左右');
+var dimension=Math.round(canvas.width*result.multiplier)+' x '+Math.round(canvas.height*result.multiplier);
+var detail;
+if(isUpperBound){
+detail='当前画面接近纯色，压缩率无法从取样推断，因此给的是上限：'+formatByteSize(result.bytes)+' 以内。\n';
+}else{
+var range=formatByteSize(result.low)+' ~ '+formatByteSize(result.high);
+detail='按当前设置导出约为 '+formatByteSize(result.bytes)+'（多数情况落在 '+range+'）。\n';
+}
+detail+='输出像素 '+dimension+'，格式 '+result.format.toUpperCase();
+if(result.quality!==null&&result.quality!==undefined)detail+='，品质 '+Math.round(result.quality*100)+'%';
+if(result.capped)detail+='。\n已触及导出上限，实际尺寸小于设定 DPI。';
+node.title=detail;
+}
+if(exportEstimatePending){
+exportEstimatePending=false;
+scheduleExportSizeEstimate();
+}
+},0);
+}
+
+function scheduleExportSizeEstimate(delay){
+if(exportEstimateTimer)clearTimeout(exportEstimateTimer);
+exportEstimateTimer=setTimeout(function(){
+exportEstimateTimer=null;
+renderExportSizeEstimate();
+},typeof delay==='number'?delay:350);
+}
+
+function syncExportSizeEstimate(){
+bindExportPagePlanEvents();
+var label=$('outputImageEstimate');
+if(!label)return;
+['outputImageFormat','outputImageQuality','outputDpi'].forEach(function(id){
+var element=$(id);
+if(!element||element.dataset.estimateBound)return;
+element.dataset.estimateBound='1';
+element.addEventListener('change',function(){scheduleExportSizeEstimate();});
+element.addEventListener('input',function(){scheduleExportSizeEstimate();});
+});
+if(typeof canvas!=='undefined'&&canvas&&canvas.on){
+['object:added','object:modified','object:removed'].forEach(function(eventName){
+canvas.on(eventName,function(){scheduleExportSizeEstimate();});
+});
+}
+scheduleExportSizeEstimate(600);
+}
 
 let canvasContinerScale=1;
 

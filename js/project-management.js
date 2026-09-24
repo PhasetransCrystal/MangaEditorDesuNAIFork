@@ -197,6 +197,7 @@ knifePanelSpaceSize:{id:'knifePanelSpaceSize',default:'20'},
 canvasBgColor:{id:'bg-color',default:'#ffffff'},
 canvasDpi:{id:'outputDpi',default:'300'},
 outputImageFormat:{id:'outputImageFormat',default:'png'},
+outputBitDepth:{id:'outputBitDepth',default:'rgb'},
 outputImageQuality:{id:'outputImageQuality',default:'0.92'},
 canvasGridLineSize:{id:'gridSizeInput',default:'10'},
 canvasMarginFromPanel:{id:'marginFromPanel',default:20},
@@ -392,6 +393,14 @@ localStorage.setItem('localSettingsData',JSON.stringify(parsed));
 }catch(error){/* ignore */}
 }
 
+// 画布メニューの出力画素プレビューは、保存した DPI を読んだ後に作り直す。
+// canvas-manager.js の DOMContentLoaded の方が先に走るため、
+// ここで追いつかせないと起動直後の表示が初期値のまま残る。
+function syncExportPlanAfterSettingsLoad(){
+if(typeof syncExportPagePlan==='function')syncExportPagePlan();
+if(typeof scheduleExportSizeEstimate==='function')scheduleExportSizeEstimate(0);
+}
+
 function loadSettingsLocalStrage(){
 var stored=localStorage.getItem('localSettingsData');
 var secrets=readSecretStore();
@@ -408,6 +417,7 @@ applyAssemblyPageSizeMigration();
 if(typeof syncJsColorFromInputs==='function'){
 syncJsColorFromInputs();
 }
+syncExportPlanAfterSettingsLoad();
 return;
 }
 var data=JSON.parse(stored);
@@ -519,6 +529,7 @@ if(typeof enforceNovelAIOnlyMode==='function'){
 enforceNovelAIOnlyMode();
 }
 updateWorkflowType();
+syncExportPlanAfterSettingsLoad();
 }
 
 function saveSettingsLocalStrage(silent){
