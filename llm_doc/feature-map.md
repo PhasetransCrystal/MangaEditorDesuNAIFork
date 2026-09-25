@@ -45,6 +45,7 @@
 | SFX パレット | `js/sidebar/text/sfx-palette.js` | `STORAGE_KEY`:4, `STYLE_NAMES`:5, `BUILTIN`:7, `clone`:50 | - | `npm run test:page-studio` | `llm_doc/ui-patterns.md` |
 | 吹き出し（テキスト/手描き） | `js/sidebar/speechBubble/speech-bubble-text.js`, `js/sidebar/speechBubble/speech-bubble-freehand.js` | `createSpeechBubbleMetrics`:143, `updateObjectPositions`:303, `mainSpeechBubbleObjectResize`:350, `speechBubbleTextChaged`:429 | `fontSelector`, `fontSizeSlider`, `bubbleStrokeColor`, `bubbleFillColor`, `speechBubbleOpacity` | - | `llm_doc/ui-patterns.md` |
 | 吹き出し SVG | `js/svg/speechbubble.js` | `SpeechBubble`:1 | - | - | `llm_doc/ui-patterns.md` |
+| テキスト編集のフォーカス（画面スクロール防止） | `js/core/util/fabric-text-focus.js` | `focusWithoutScroll`:15, `patchTextPrototype`:44, `install`:61 | - | `npm run test:fabric-text-focus` | `llm_doc/ui-patterns.md` |
 | **AI 生成** |  |  |  |  |  |
 | プロバイダ登録とロール割り当て | `js/ai/provider/provider-registry.js` | `providerRegistry`:2, `register`:7, `setRoleAssignment`:45, `getAllRoleAssignments`:56 | - | `npm run test:nai-pipeline` | `llm_doc/ai-system.md` |
 | ロール定義 | `js/ai/role/ai-roles.js` | `AI_ROLES`:2, `hasRole`:33, `hasNotRole`:29 | - | - | `llm_doc/ai-system.md` |

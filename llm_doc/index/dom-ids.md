@@ -147,49 +147,49 @@
 | `cutoutRunButton` | index.html:1397 | js/local-tools/background-removal-client.js:480 |
 | `cutoutServiceUrl` | index.html:1330 | js/local-tools/background-removal-client.js:32 |
 | `cutoutStatus` | index.html:1399 | js/local-tools/background-removal-client.js:23 |
-| `dashboard-close-btn` | index.html:2779 | js/dashboard/dashboard-ui.js:217 |
-| `dashboard-modal` | index.html:2777 | js/dashboard/dashboard-ui.js:120 |
-| `dashboardAvgSession` | index.html:2919 | js/dashboard/dashboard-ui.js:608, js/ui/third/i18next.js:2405 |
-| `dashboardBadgeGrid` | index.html:3001 | js/dashboard/dashboard-ui.js:930 |
-| `dashboardCalendar` | index.html:2932 | js/dashboard/dashboard-ui.js:612, js/ui/third/i18next.js:2407 |
-| `dashboardChart` | index.html:2843 | js/dashboard/dashboard-ui.js:318 |
-| `dashboardClearStats` | index.html:2783 | js/dashboard/dashboard-ui.js:183 |
-| `dashboardClearTags` | index.html:2868 | js/dashboard/dashboard-ui.js:193, js/ui/third/i18next.js:2945 |
-| `dashboardCoOccurrenceTable` | index.html:2962 | js/dashboard/dashboard-ui.js:817 |
-| `dashboardCurrentSession` | index.html:2911 | js/dashboard/dashboard-ui.js:606, js/ui/third/i18next.js:2403 |
-| `dashboardCurrentStreak` | index.html:2890 | js/dashboard/dashboard-ui.js:600, js/ui/third/i18next.js:2399 |
-| `dashboardDailyGoalInput` | index.html:2981 | js/dashboard/dashboard-ui.js:230, js/project-management.js:293 |
-| `dashboardDailyProgressBar` | index.html:2985 | js/dashboard/dashboard-ui.js:904 |
-| `dashboardDailyProgressText` | index.html:2985 | js/dashboard/dashboard-ui.js:907 |
-| `dashboardDownloadWordcloud` | index.html:2877 | js/dashboard/dashboard-ui.js:204 |
-| `dashboardExportCSV` | index.html:3009 | js/dashboard/dashboard-ui.js:253, js/ui/third/i18next.js:2426 |
-| `dashboardExportJSON` | index.html:3008 | js/dashboard/dashboard-ui.js:249, js/ui/third/i18next.js:2425 |
-| `dashboardFirstLaunch` | index.html:2811 | js/dashboard/dashboard-ui.js:299 |
-| `dashboardGlobalAvg` | index.html:2791 | js/dashboard/dashboard-ui.js:294 |
-| `dashboardGlobalMax` | index.html:2799 | js/dashboard/dashboard-ui.js:296 |
-| `dashboardGlobalMin` | index.html:2795 | js/dashboard/dashboard-ui.js:295 |
-| `dashboardHeatmap` | index.html:2850 | js/dashboard/dashboard-ui.js:380 |
-| `dashboardLaunchCount` | index.html:2807 | js/dashboard/dashboard-ui.js:298 |
-| `dashboardLongestStreak` | index.html:2895 | js/dashboard/dashboard-ui.js:601, js/ui/third/i18next.js:2400 |
-| `dashboardModeSelector` | index.html:2837 | js/dashboard/dashboard-ui.js:169 |
-| `dashboardModelChart` | index.html:2971 | js/dashboard/dashboard-ui.js:834 |
-| `dashboardPromptLengthChart` | index.html:2947 | js/dashboard/dashboard-ui.js:744 |
-| `dashboardSaveDailyGoal` | index.html:2982 | js/dashboard/dashboard-ui.js:227 |
-| `dashboardSaveWeeklyGoal` | index.html:2990 | js/dashboard/dashboard-ui.js:238 |
-| `dashboardSessionGenCount` | index.html:2915 | js/dashboard/dashboard-ui.js:607 |
-| `dashboardStatsTable` | index.html:2830 | js/dashboard/dashboard-ui.js:300 |
-| `dashboardSuccessRateChart` | index.html:2939 | js/dashboard/dashboard-ui.js:695 |
-| `dashboardTodayCount` | index.html:2900 | js/dashboard/dashboard-ui.js:602 |
-| `dashboardTopTags` | index.html:2870 | js/dashboard/dashboard-ui.js:517, js/ui/third/i18next.js:2941 |
-| `dashboardTotalGenerations` | index.html:2787 | js/dashboard/dashboard-ui.js:293 |
-| `dashboardTotalSessions` | index.html:2923 | js/dashboard/dashboard-ui.js:609, js/ui/third/i18next.js:2406 |
-| `dashboardTrendChart` | index.html:2862 | js/dashboard/dashboard-ui.js:441 |
-| `dashboardTrendSelector` | index.html:2855 | js/dashboard/dashboard-ui.js:176 |
-| `dashboardUniqueTags` | index.html:2803 | js/dashboard/dashboard-ui.js:297 |
-| `dashboardWeeklyGoalInput` | index.html:2989 | js/dashboard/dashboard-ui.js:241, js/project-management.js:294 |
-| `dashboardWeeklyProgressBar` | index.html:2993 | js/dashboard/dashboard-ui.js:916 |
-| `dashboardWeeklyProgressText` | index.html:2993 | js/dashboard/dashboard-ui.js:919 |
-| `dashboardWordcloud` | index.html:2880 | js/dashboard/dashboard-ui.js:208, js/ui/third/i18next.js:2943 |
+| `dashboard-close-btn` | index.html:2780 | js/dashboard/dashboard-ui.js:217 |
+| `dashboard-modal` | index.html:2778 | js/dashboard/dashboard-ui.js:120 |
+| `dashboardAvgSession` | index.html:2920 | js/dashboard/dashboard-ui.js:608, js/ui/third/i18next.js:2405 |
+| `dashboardBadgeGrid` | index.html:3002 | js/dashboard/dashboard-ui.js:930 |
+| `dashboardCalendar` | index.html:2933 | js/dashboard/dashboard-ui.js:612, js/ui/third/i18next.js:2407 |
+| `dashboardChart` | index.html:2844 | js/dashboard/dashboard-ui.js:318 |
+| `dashboardClearStats` | index.html:2784 | js/dashboard/dashboard-ui.js:183 |
+| `dashboardClearTags` | index.html:2869 | js/dashboard/dashboard-ui.js:193, js/ui/third/i18next.js:2945 |
+| `dashboardCoOccurrenceTable` | index.html:2963 | js/dashboard/dashboard-ui.js:817 |
+| `dashboardCurrentSession` | index.html:2912 | js/dashboard/dashboard-ui.js:606, js/ui/third/i18next.js:2403 |
+| `dashboardCurrentStreak` | index.html:2891 | js/dashboard/dashboard-ui.js:600, js/ui/third/i18next.js:2399 |
+| `dashboardDailyGoalInput` | index.html:2982 | js/dashboard/dashboard-ui.js:230, js/project-management.js:293 |
+| `dashboardDailyProgressBar` | index.html:2986 | js/dashboard/dashboard-ui.js:904 |
+| `dashboardDailyProgressText` | index.html:2986 | js/dashboard/dashboard-ui.js:907 |
+| `dashboardDownloadWordcloud` | index.html:2878 | js/dashboard/dashboard-ui.js:204 |
+| `dashboardExportCSV` | index.html:3010 | js/dashboard/dashboard-ui.js:253, js/ui/third/i18next.js:2426 |
+| `dashboardExportJSON` | index.html:3009 | js/dashboard/dashboard-ui.js:249, js/ui/third/i18next.js:2425 |
+| `dashboardFirstLaunch` | index.html:2812 | js/dashboard/dashboard-ui.js:299 |
+| `dashboardGlobalAvg` | index.html:2792 | js/dashboard/dashboard-ui.js:294 |
+| `dashboardGlobalMax` | index.html:2800 | js/dashboard/dashboard-ui.js:296 |
+| `dashboardGlobalMin` | index.html:2796 | js/dashboard/dashboard-ui.js:295 |
+| `dashboardHeatmap` | index.html:2851 | js/dashboard/dashboard-ui.js:380 |
+| `dashboardLaunchCount` | index.html:2808 | js/dashboard/dashboard-ui.js:298 |
+| `dashboardLongestStreak` | index.html:2896 | js/dashboard/dashboard-ui.js:601, js/ui/third/i18next.js:2400 |
+| `dashboardModeSelector` | index.html:2838 | js/dashboard/dashboard-ui.js:169 |
+| `dashboardModelChart` | index.html:2972 | js/dashboard/dashboard-ui.js:834 |
+| `dashboardPromptLengthChart` | index.html:2948 | js/dashboard/dashboard-ui.js:744 |
+| `dashboardSaveDailyGoal` | index.html:2983 | js/dashboard/dashboard-ui.js:227 |
+| `dashboardSaveWeeklyGoal` | index.html:2991 | js/dashboard/dashboard-ui.js:238 |
+| `dashboardSessionGenCount` | index.html:2916 | js/dashboard/dashboard-ui.js:607 |
+| `dashboardStatsTable` | index.html:2831 | js/dashboard/dashboard-ui.js:300 |
+| `dashboardSuccessRateChart` | index.html:2940 | js/dashboard/dashboard-ui.js:695 |
+| `dashboardTodayCount` | index.html:2901 | js/dashboard/dashboard-ui.js:602 |
+| `dashboardTopTags` | index.html:2871 | js/dashboard/dashboard-ui.js:517, js/ui/third/i18next.js:2941 |
+| `dashboardTotalGenerations` | index.html:2788 | js/dashboard/dashboard-ui.js:293 |
+| `dashboardTotalSessions` | index.html:2924 | js/dashboard/dashboard-ui.js:609, js/ui/third/i18next.js:2406 |
+| `dashboardTrendChart` | index.html:2863 | js/dashboard/dashboard-ui.js:441 |
+| `dashboardTrendSelector` | index.html:2856 | js/dashboard/dashboard-ui.js:176 |
+| `dashboardUniqueTags` | index.html:2804 | js/dashboard/dashboard-ui.js:297 |
+| `dashboardWeeklyGoalInput` | index.html:2990 | js/dashboard/dashboard-ui.js:241, js/project-management.js:294 |
+| `dashboardWeeklyProgressBar` | index.html:2994 | js/dashboard/dashboard-ui.js:916 |
+| `dashboardWeeklyProgressText` | index.html:2994 | js/dashboard/dashboard-ui.js:919 |
+| `dashboardWordcloud` | index.html:2881 | js/dashboard/dashboard-ui.js:208, js/ui/third/i18next.js:2943 |
 | `desu-nav` | index.html:250 | index.html:132 |
 | `edit` | index.html:828 | js/core/svg/google-icon-helper.js:64, js/core/svg/google-icon-names.js:11, js/sidebar/panel/panel-manager.js:449, js/ui/canvas-object-menu.js:11, js/ui/util/mode-manager.js:346 |
 | `esApi-controls-mini` | index.html:2207 |  |
@@ -497,46 +497,46 @@
 | `sidebar` | index.html:642 |  |
 | `sidebarMore` | index.html:719 | js/sidebar/sidebar.js:9, js/ui/tutorial.js:150 |
 | `sidebarMoreToggle` | index.html:737 | js/sidebar/sidebar.js:8 |
-| `simStudioBack` | index.html:3018 | js/simulator/simulator-studio.js:830, js/ui/third/base-translation/base-de.js:522, js/ui/third/base-translation/base-en.js:537, js/ui/third/base-translation/base-es.js:514, js/ui/third/base-translation/base-fr.js:531, js/ui/third/base-translation/base-ja.js:527, js/ui/third/base-translation/base-ko.js:529, js/ui/third/base-translation/base-ru.js:515, js/ui/third/base-translation/base-zh.js:542 |
-| `simStudioChatActions` | index.html:3067 | js/simulator/simulator-studio.js:864 |
-| `simStudioChatDock` | index.html:3032 | js/simulator/simulator-studio.js:861 |
-| `simStudioChatInsert` | index.html:3068 | js/simulator/simulator-studio.js:1051 |
-| `simStudioChatLoad` | index.html:3069 | js/simulator/simulator-studio.js:1053 |
-| `simStudioChatScript` | index.html:3045 | js/simulator/simulator-studio.js:116 |
-| `simStudioChatStore` | index.html:3038 | js/simulator/simulator-studio.js:441 |
-| `simStudioChatTemplate` | index.html:3041 | js/simulator/simulator-studio.js:414 |
-| `simStudioChatTitle` | index.html:3035 | js/simulator/simulator-studio.js:125 |
-| `simStudioClose` | index.html:3020 | js/simulator/simulator-studio.js:1038, js/ui/third/base-translation/base-de.js:523, js/ui/third/base-translation/base-en.js:538, js/ui/third/base-translation/base-es.js:515, js/ui/third/base-translation/base-fr.js:532, js/ui/third/base-translation/base-ja.js:528, js/ui/third/base-translation/base-ko.js:530, js/ui/third/base-translation/base-ru.js:516, js/ui/third/base-translation/base-zh.js:543 |
-| `simStudioFit` | index.html:3091 | js/simulator/simulator-studio.js:1088 |
-| `simStudioHome` | index.html:3022 | js/simulator/simulator-studio.js:828 |
-| `simStudioHomeGrid` | index.html:3024 | js/simulator/simulator-studio.js:462 |
-| `simStudioPartActions` | index.html:3076 | js/simulator/simulator-studio.js:866 |
-| `simStudioPartDock` | index.html:3056 | js/simulator/simulator-studio.js:863 |
-| `simStudioPartForm` | index.html:3063 | js/simulator/simulator-studio.js:429 |
-| `simStudioPartInsert` | index.html:3077 | js/simulator/simulator-studio.js:1072 |
-| `simStudioPartLoad` | index.html:3078 | js/simulator/simulator-studio.js:1074 |
-| `simStudioPartSelect` | index.html:3061 |  |
-| `simStudioPartStore` | index.html:3058 | js/simulator/simulator-studio.js:488 |
-| `simStudioPlay` | index.html:3083 | js/simulator/simulator-studio.js:1080, js/ui/third/base-translation/base-de.js:529, js/ui/third/base-translation/base-en.js:544, js/ui/third/base-translation/base-es.js:521, js/ui/third/base-translation/base-fr.js:538, js/ui/third/base-translation/base-ja.js:534, js/ui/third/base-translation/base-ko.js:536, js/ui/third/base-translation/base-ru.js:522, js/ui/third/base-translation/base-zh.js:549 |
-| `simStudioPlayIndex` | index.html:3085 | js/simulator/simulator-studio.js:515 |
-| `simStudioPlayNext` | index.html:3082 | js/simulator/simulator-studio.js:1078, js/ui/third/base-translation/base-de.js:528, js/ui/third/base-translation/base-en.js:543, js/ui/third/base-translation/base-es.js:520, js/ui/third/base-translation/base-fr.js:537, js/ui/third/base-translation/base-ja.js:533, js/ui/third/base-translation/base-ko.js:535, js/ui/third/base-translation/base-ru.js:521, js/ui/third/base-translation/base-zh.js:548 |
-| `simStudioPlayPrev` | index.html:3081 | js/simulator/simulator-studio.js:1076, js/ui/third/base-translation/base-de.js:527, js/ui/third/base-translation/base-en.js:542, js/ui/third/base-translation/base-es.js:519, js/ui/third/base-translation/base-fr.js:536, js/ui/third/base-translation/base-ja.js:532, js/ui/third/base-translation/base-ko.js:534, js/ui/third/base-translation/base-ru.js:520, js/ui/third/base-translation/base-zh.js:547 |
-| `simStudioPlayStop` | index.html:3084 | js/simulator/simulator-studio.js:1082 |
-| `simStudioPlayTotal` | index.html:3085 | js/simulator/simulator-studio.js:516 |
-| `simStudioPreview` | index.html:3028 | js/simulator/simulator-studio.js:570 |
-| `simStudioPreviewHost` | index.html:3027 | js/simulator/simulator-studio.js:569 |
-| `simStudioScaleDown` | index.html:3089 | js/simulator/simulator-studio.js:1084 |
-| `simStudioScaleUp` | index.html:3090 | js/simulator/simulator-studio.js:1086 |
-| `simStudioStatus` | index.html:3096 | js/simulator/simulator-studio.js:105 |
-| `simStudioTitle` | index.html:3019 | js/simulator/simulator-studio.js:834, js/ui/third/base-translation/base-de.js:520, js/ui/third/base-translation/base-en.js:535, js/ui/third/base-translation/base-es.js:512, js/ui/third/base-translation/base-fr.js:529, js/ui/third/base-translation/base-ja.js:525, js/ui/third/base-translation/base-ko.js:527, js/ui/third/base-translation/base-ru.js:513, js/ui/third/base-translation/base-zh.js:540 |
-| `simStudioWebActions` | index.html:3071 | js/simulator/simulator-studio.js:865 |
-| `simStudioWebDock` | index.html:3049 | js/simulator/simulator-studio.js:862 |
-| `simStudioWebExample` | index.html:3072 | js/simulator/simulator-studio.js:1059 |
-| `simStudioWebForm` | index.html:3054 | js/simulator/simulator-studio.js:428 |
-| `simStudioWebInsert` | index.html:3073 | js/simulator/simulator-studio.js:1055 |
-| `simStudioWebLoad` | index.html:3074 | js/simulator/simulator-studio.js:1057 |
-| `simStudioWebTemplate` | index.html:3052 | js/simulator/simulator-studio.js:445 |
-| `simStudioWork` | index.html:3026 | js/simulator/simulator-studio.js:829 |
+| `simStudioBack` | index.html:3019 | js/simulator/simulator-studio.js:830, js/ui/third/base-translation/base-de.js:522, js/ui/third/base-translation/base-en.js:537, js/ui/third/base-translation/base-es.js:514, js/ui/third/base-translation/base-fr.js:531, js/ui/third/base-translation/base-ja.js:527, js/ui/third/base-translation/base-ko.js:529, js/ui/third/base-translation/base-ru.js:515, js/ui/third/base-translation/base-zh.js:542 |
+| `simStudioChatActions` | index.html:3068 | js/simulator/simulator-studio.js:864 |
+| `simStudioChatDock` | index.html:3033 | js/simulator/simulator-studio.js:861 |
+| `simStudioChatInsert` | index.html:3069 | js/simulator/simulator-studio.js:1051 |
+| `simStudioChatLoad` | index.html:3070 | js/simulator/simulator-studio.js:1053 |
+| `simStudioChatScript` | index.html:3046 | js/simulator/simulator-studio.js:116 |
+| `simStudioChatStore` | index.html:3039 | js/simulator/simulator-studio.js:441 |
+| `simStudioChatTemplate` | index.html:3042 | js/simulator/simulator-studio.js:414 |
+| `simStudioChatTitle` | index.html:3036 | js/simulator/simulator-studio.js:125 |
+| `simStudioClose` | index.html:3021 | js/simulator/simulator-studio.js:1038, js/ui/third/base-translation/base-de.js:523, js/ui/third/base-translation/base-en.js:538, js/ui/third/base-translation/base-es.js:515, js/ui/third/base-translation/base-fr.js:532, js/ui/third/base-translation/base-ja.js:528, js/ui/third/base-translation/base-ko.js:530, js/ui/third/base-translation/base-ru.js:516, js/ui/third/base-translation/base-zh.js:543 |
+| `simStudioFit` | index.html:3092 | js/simulator/simulator-studio.js:1088 |
+| `simStudioHome` | index.html:3023 | js/simulator/simulator-studio.js:828 |
+| `simStudioHomeGrid` | index.html:3025 | js/simulator/simulator-studio.js:462 |
+| `simStudioPartActions` | index.html:3077 | js/simulator/simulator-studio.js:866 |
+| `simStudioPartDock` | index.html:3057 | js/simulator/simulator-studio.js:863 |
+| `simStudioPartForm` | index.html:3064 | js/simulator/simulator-studio.js:429 |
+| `simStudioPartInsert` | index.html:3078 | js/simulator/simulator-studio.js:1072 |
+| `simStudioPartLoad` | index.html:3079 | js/simulator/simulator-studio.js:1074 |
+| `simStudioPartSelect` | index.html:3062 |  |
+| `simStudioPartStore` | index.html:3059 | js/simulator/simulator-studio.js:488 |
+| `simStudioPlay` | index.html:3084 | js/simulator/simulator-studio.js:1080, js/ui/third/base-translation/base-de.js:529, js/ui/third/base-translation/base-en.js:544, js/ui/third/base-translation/base-es.js:521, js/ui/third/base-translation/base-fr.js:538, js/ui/third/base-translation/base-ja.js:534, js/ui/third/base-translation/base-ko.js:536, js/ui/third/base-translation/base-ru.js:522, js/ui/third/base-translation/base-zh.js:549 |
+| `simStudioPlayIndex` | index.html:3086 | js/simulator/simulator-studio.js:515 |
+| `simStudioPlayNext` | index.html:3083 | js/simulator/simulator-studio.js:1078, js/ui/third/base-translation/base-de.js:528, js/ui/third/base-translation/base-en.js:543, js/ui/third/base-translation/base-es.js:520, js/ui/third/base-translation/base-fr.js:537, js/ui/third/base-translation/base-ja.js:533, js/ui/third/base-translation/base-ko.js:535, js/ui/third/base-translation/base-ru.js:521, js/ui/third/base-translation/base-zh.js:548 |
+| `simStudioPlayPrev` | index.html:3082 | js/simulator/simulator-studio.js:1076, js/ui/third/base-translation/base-de.js:527, js/ui/third/base-translation/base-en.js:542, js/ui/third/base-translation/base-es.js:519, js/ui/third/base-translation/base-fr.js:536, js/ui/third/base-translation/base-ja.js:532, js/ui/third/base-translation/base-ko.js:534, js/ui/third/base-translation/base-ru.js:520, js/ui/third/base-translation/base-zh.js:547 |
+| `simStudioPlayStop` | index.html:3085 | js/simulator/simulator-studio.js:1082 |
+| `simStudioPlayTotal` | index.html:3086 | js/simulator/simulator-studio.js:516 |
+| `simStudioPreview` | index.html:3029 | js/simulator/simulator-studio.js:570 |
+| `simStudioPreviewHost` | index.html:3028 | js/simulator/simulator-studio.js:569 |
+| `simStudioScaleDown` | index.html:3090 | js/simulator/simulator-studio.js:1084 |
+| `simStudioScaleUp` | index.html:3091 | js/simulator/simulator-studio.js:1086 |
+| `simStudioStatus` | index.html:3097 | js/simulator/simulator-studio.js:105 |
+| `simStudioTitle` | index.html:3020 | js/simulator/simulator-studio.js:834, js/ui/third/base-translation/base-de.js:520, js/ui/third/base-translation/base-en.js:535, js/ui/third/base-translation/base-es.js:512, js/ui/third/base-translation/base-fr.js:529, js/ui/third/base-translation/base-ja.js:525, js/ui/third/base-translation/base-ko.js:527, js/ui/third/base-translation/base-ru.js:513, js/ui/third/base-translation/base-zh.js:540 |
+| `simStudioWebActions` | index.html:3072 | js/simulator/simulator-studio.js:865 |
+| `simStudioWebDock` | index.html:3050 | js/simulator/simulator-studio.js:862 |
+| `simStudioWebExample` | index.html:3073 | js/simulator/simulator-studio.js:1059 |
+| `simStudioWebForm` | index.html:3055 | js/simulator/simulator-studio.js:428 |
+| `simStudioWebInsert` | index.html:3074 | js/simulator/simulator-studio.js:1055 |
+| `simStudioWebLoad` | index.html:3075 | js/simulator/simulator-studio.js:1057 |
+| `simStudioWebTemplate` | index.html:3053 | js/simulator/simulator-studio.js:445 |
+| `simStudioWork` | index.html:3027 | js/simulator/simulator-studio.js:829 |
 | `simulator-chat-area` | index.html:1178 | js/sidebar/sidebar.js:82, js/ui/beginner-guide.js:198 |
 | `simulator-extra-section` | index.html:1287 |  |
 | `simulator-playback-section` | index.html:1226 |  |
@@ -570,7 +570,7 @@
 | `simulatorPlaybackStatus` | index.html:1241 | js/simulator/playback-controller.js:11 |
 | `simulatorPlaybackStop` | index.html:1232 | js/simulator/playback-controller.js:100 |
 | `simulatorPlaybackTotal` | index.html:1234 | js/simulator/playback-controller.js:23 |
-| `simulatorStudioOverlay` | index.html:3016 | js/simulator/simulator-studio.js:85 |
+| `simulatorStudioOverlay` | index.html:3017 | js/simulator/simulator-studio.js:85 |
 | `simulatorWorkspaceTabs` | index.html:1181 | js/assets/asset-library-controller.js:211 |
 | `skewX-control` | index.html:1985 | js/ui/control/common-control-management.js:2 |
 | `skewY-control` | index.html:1988 | js/ui/control/common-control-management.js:2 |

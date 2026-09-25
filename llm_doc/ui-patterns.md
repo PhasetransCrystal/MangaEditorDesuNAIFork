@@ -120,6 +120,22 @@ getText("keyName")  // i18next.t()のラッパー
 - `saveSettingsLocalStrage` は `sanitizeSettingsValueForStorage` で保存前に DPI を検証する。入力途中の `-5` をそのまま保存すると、次回起動時に読み込んだ値が 300 に化けて「設定が勝手に戻る」ように見える。不正値の間は直前の保存値を据え置く。
 - 保存値の読み込みは `canvas-manager.js` の DOMContentLoaded より後れるため、読み込み後に `syncExportPlanAfterSettingsLoad`（project-management.js）がプレビューを作り直す。これを忘れると起動直後だけ DPI と画素表示が食い違う。
 
+## テキスト編集と画面スクロール（fabric の隠し textarea）
+
+fabric の `IText` / `Textbox` は編集開始時に、1px の隠し `<textarea data-fabric-hiddentextarea>` を生成して `document.body` 直下に置く。位置は **文書座標**（`position:absolute; top/left` = `canvas._offset` + canvas 内の座標）で、`hiddenTextareaContainer` を指定しない限り canvas の大きさぶんしかクランプされない。
+
+- `enterEditing()` は `this.hiddenTextarea.focus()` を呼ぶ。textarea が画面外（viewport の外）にあると、ブラウザは **document 全体をスクロール**して見せようとする。
+- その結果 `#resizable-container` の scrollTop/scrollLeft が動き、`canvas.calcOffset()` を通る `canvas._offset` が古くなる。次のクリック座標がずれ、「オブジェクトを再クリックしただけで視野が飛ぶ」ように見える。
+- 症状は配置に依存する。キャンバスの右側に置けば横へ、下側に置けば縦へ飛ぶ。左上付近では起きない。
+
+対策は `js/core/util/fabric-text-focus.js`。`initHiddenTextarea` をラップし、生成直後の textarea の `focus` を `{preventScroll:true}` 付きに差し替える。
+
+- `patchTextPrototype` は **そのプロトタイプ自身が `initHiddenTextarea` を持っている場合だけ**パッチする。`Textbox` は `IText` を継承して持たないため、`IText` を押さえれば `Textbox` もアプリ固有の `VerticalTextbox`（`js/sidebar/text/vertical-textbox.js`、`fabric.IText` を継承）も同時に直る。二重ラップは `__naiFocusNoScrollPatched` で防ぐ。
+- `preventScroll` を渡せない、あるいは黙って無視する実装への保険として、`focus()` の前後で `document.scrollingElement` の scrollTop/scrollLeft を保存し、動いた時だけ戻す。例外時も同じ経路を通る。
+- **`_calcTextareaPosition` の座標系は変えない。** 文書座標のままにしておかないと、IME（日本語入力）の候補ウィンドウが編集位置から離れた場所に出る。抑えるのはスクロールだけ。
+- `index.html` では fabric 本体（2531）の直後、`defer` を付けずに読む。`VerticalTextbox`（2676）や `fabric-management.js`（2721）より先に当てる必要がある。
+- 回帰テストは `npm run test:fabric-text-focus`。継承関係・スクロール不変・二重パッチ防止に加え、**対策を外すとスクロールが再現すること**も検証する（テストが空振りしていないことの確認）。
+
 ## ModeManager
 操作モード切り替え: SELECT, FREEHAND, KNIFE, PEN各種, CROP
 ```javascript

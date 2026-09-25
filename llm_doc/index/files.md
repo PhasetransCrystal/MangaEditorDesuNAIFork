@@ -69,7 +69,7 @@
 | html/TermsOfService/terms-of-service.html | 120 |  |
 | html/common.css | 343 |  |
 | html/functionList.html | 321 |  |
-| index.html | 3101 |  |
+| index.html | 3102 |  |
 | js/ai/ai-management.js | 153 | AI機能の中央ルーター: プロバイダーレジストリ経由でディスパッチ |
 | js/ai/ai-settings.js | 424 |  |
 | js/ai/angle/angle-editor.js | 103 | アングル変更エディタ（モーダルオーバーレイ） |
@@ -153,6 +153,7 @@
 | js/core/svg/google-icon-names.js | 12 |  |
 | js/core/util/anime-util.js | 11 |  |
 | js/core/util/array-buffer-utils.js | 53 |  |
+| js/core/util/fabric-text-focus.js | 74 | fabric の IText / Textbox は、入力用の 1px の textarea を |
 | js/core/util/fabric-util.js | 941 |  |
 | js/core/util/html-canvas-util.js | 91 | html-canvas-util.js - HTMLキャンバスに対する低レベル操作（境界検出、スケーリング、ピクセル処理） |
 | js/core/util/image-analyzer-util.js | 121 |  |
@@ -312,6 +313,7 @@
 | scripts/custom-brush-smoke-test.cjs | 44 |  |
 | scripts/cutout-color-key-smoke-test.py | 36 |  |
 | scripts/cutout-presets-smoke-test.cjs | 34 |  |
+| scripts/fabric-text-focus-smoke-test.cjs | 145 | fabric の編集用 textarea がスクロールを起こさないことを検証する。 |
 | scripts/gen-project-index.cjs | 722 | プロジェクト索引の自動生成。 |
 | scripts/generate-original-starter-svgs.cjs | 326 |  |
 | scripts/generate-site-ui-svgs.cjs | 391 |  |

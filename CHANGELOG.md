@@ -4,6 +4,7 @@ Version numbers apply to **this fork only**, not to upstream Manga Editor Desu.
 
 ## Unreleased
 
+- Fix 画布: clicking an already-focused text object no longer shifts the whole view. fabric parks a 1px hidden `<textarea>` under `document.body` in document coordinates, so `enterEditing()` scrolled the page to reveal it and left `canvas._offset` stale. The new `js/core/util/fabric-text-focus.js` focuses that textarea with `preventScroll:true` while keeping its original coordinates, so IME candidate placement is unchanged.
 - Fix 下载 DPI jumping to 300 when the field holds an invalid value. Typing a negative number (or clearing the field) now restores the last confirmed DPI instead of silently resetting to the default; out-of-range positives still clamp to 96 / 1800 with a toast either way.
 - 画布 → 预计导出大小 tooltip now reports the same pixel dimensions as the 竖图/横图 preview rows. It used to round where the real export truncates, so it could claim one pixel more than you actually got.
 - Stop the 画布 pixel and DPI fields from rewriting what you are typing. Validation and commit now happen on blur or Enter only, replacing the old 800ms idle timer that reverted numbers mid-keystroke. Meanwhile, values that are obviously mid-edit (blank, negative) are no longer written to localStorage, so an interrupted edit can no longer come back as 300 after a restart.

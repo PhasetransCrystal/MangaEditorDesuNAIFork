@@ -4,7 +4,7 @@
 
 - 抽出対象: `root.X=` / `window.X=` / `globalThis.X=`、行頭の `function X` / `var X` / `let X` / `const X`
 - 抽出範囲: js / cjs / mjs と、html のインライン `<script>`（行番号は元ファイル基準）
-- 合計 10936 件 / ユニーク名 5822 件
+- 合計 10969 件 / ユニーク名 5843 件
 
 ## シンボル → 定義
 
@@ -270,6 +270,7 @@
 | `NaiComicTimeline` | global | js/simulator/timeline.js:35 |
 | `NaiCustomBrush` | global | js/sidebar/pen/custom-brush.js:268 |
 | `NaiCutoutPresets` | global | js/local-tools/cutout-presets.js:96 |
+| `NaiFabricTextFocus` | global | js/core/util/fabric-text-focus.js:72 |
 | `NaiImage2Client` | global | js/assets/image2-client.js:38 |
 | `NaiImage2Controller` | global | js/assets/image2-controller.js:16 |
 | `NaiImage2JobStore` | global | js/assets/image2-job-store.js:13 |
@@ -310,6 +311,7 @@
 | `PANEL_LAYOUT_TEMPLATE_STORAGE_KEY` | var | js/panel/layout-templates.js:4 |
 | `PAPER_PRESETS` | var | js/sidebar/page/page-studio.js:4 |
 | `PARTS` | var | js/simulator/site-ui-parts.js:6 |
+| `PATCHED_FLAG` | var | js/core/util/fabric-text-focus.js:11 |
 | `PERSIST_SECRETS_KEY` | var | js/project-management.js:323 |
 | `PER_PIXEL` | var | scripts/image-export-smoke-test.cjs:199 |
 | `PNG_SIGNATURE` | var | js/core/util/png-bit-depth.js:9 |
@@ -869,6 +871,7 @@
 | `assemblePrompt` | function | js/ai/prompt/novelai-composition-director.js:975 |
 | `assert` | var | scripts/custom-brush-smoke-test.cjs:1 |
 | `assert` | var | scripts/cutout-presets-smoke-test.cjs:1 |
+| `assert` | var | scripts/fabric-text-focus-smoke-test.cjs:5 |
 | `assert` | var | scripts/image-export-integration-test.cjs:4 |
 | `assert` | var | scripts/image-export-smoke-test.cjs:1 |
 | `assert` | function | scripts/manga-import-smoke-test.cjs:7 |
@@ -909,7 +912,7 @@
 | `autoMultiGenerate` | global | js/ai/prompt/auto/auto-generation.js:104 |
 | `autoMultiPromptSet` | global | js/ai/prompt/auto/auto-prompt-util.js:829 |
 | `autoOkCount` | var | js/ai/panel-pipeline-review.js:130 |
-| `autoResize` | function | index.html:2749 |
+| `autoResize` | function | index.html:2750 |
 | `autoSaveLogger` | var | js/core/logger.js:184 |
 | `avatar` | var | js/simulator/chat-controller.js:98 |
 | `avatarItems` | var | js/simulator/chat-renderer.js:232 |
@@ -1067,6 +1070,7 @@
 | `before` | var | js/ai/manga-importer.js:1125 |
 | `before` | var | js/assets/asset-store.js:292 |
 | `before` | var | js/canvas-manager.js:445 |
+| `beforeFn` | var | scripts/fabric-text-focus-smoke-test.cjs:129 |
 | `beginShape` | function | js/ui/visual-ps-tools.js:156 |
 | `beginnerLayerDisplay` | function | js/layer/layer-management.js:29 |
 | `best` | var | js/canvas-manager.js:835 |
@@ -2208,6 +2212,7 @@
 | `context` | var | scripts/asset-library-smoke-test.cjs:8 |
 | `context` | var | scripts/custom-brush-smoke-test.cjs:8 |
 | `context` | var | scripts/cutout-presets-smoke-test.cjs:8 |
+| `context` | var | scripts/fabric-text-focus-smoke-test.cjs:37 |
 | `context` | var | scripts/image-export-integration-test.cjs:160 |
 | `context` | var | scripts/image-export-smoke-test.cjs:18 |
 | `context` | var | scripts/image2-interface-smoke-test.cjs:4 |
@@ -3461,6 +3466,7 @@
 | `fabric` | var | js/simulator/chat-renderer.js:302 |
 | `fabric` | function | js/simulator/extra-renderer-factory.js:6 |
 | `fabricCanvas` | var | js/ui/control/glfx-control.js:68 |
+| `fabricIdx` | var | scripts/fabric-text-focus-smoke-test.cjs:139 |
 | `fabricImage2ImageData` | var | js/core/util/image-util.js:809 |
 | `fabricObject` | var | js/sidebar/panel/panel-manager.js:640 |
 | `factor` | var | js/simulator/extra-renderer-factory.js:400 |
@@ -3757,6 +3763,7 @@
 | `focusLineStart` | function | js/sidebar/tone/focusline.js:9 |
 | `focusPanelForReview` | function | js/ai/panel-pipeline-review.js:163 |
 | `focusTrapLogger` | var | js/core/logger.js:185 |
+| `focusWithoutScroll` | function | js/core/util/fabric-text-focus.js:15 |
 | `focusable` | var | js/ui/util/focus-trap.js:21 |
 | `focusable` | var | js/ui/util/focus-trap.js:66 |
 | `fold` | var | js/layer/layer-management.js:54 |
@@ -3878,6 +3885,7 @@
 | `fs` | var | scripts/check-translations.cjs:2 |
 | `fs` | var | scripts/custom-brush-smoke-test.cjs:2 |
 | `fs` | var | scripts/cutout-presets-smoke-test.cjs:2 |
+| `fs` | var | scripts/fabric-text-focus-smoke-test.cjs:6 |
 | `fs` | var | scripts/gen-project-index.cjs:4 |
 | `fs` | var | scripts/generate-original-starter-svgs.cjs:1 |
 | `fs` | var | scripts/generate-site-ui-svgs.cjs:1 |
@@ -4560,6 +4568,7 @@
 | `html` | var | js/dashboard/dashboard-ui.js:944 |
 | `html` | var | js/ui/canvas-object-menu.js:144 |
 | `html` | var | js/ui/visual-studio.js:297 |
+| `html` | var | scripts/fabric-text-focus-smoke-test.cjs:137 |
 | `html` | var | scripts/image-export-smoke-test.cjs:127 |
 | `html` | var | scripts/layout-smoke-test.cjs:5 |
 | `htmlPath` | var | scripts/gen-project-index.cjs:650 |
@@ -4918,6 +4927,7 @@
 | `insideObstacle` | var | js/ai/manga-importer.js:1341 |
 | `inspect` | function | js/assets/asset-scanner.js:61 |
 | `inspectorText` | function | js/ui/visual-studio.js:272 |
+| `install` | function | js/core/util/fabric-text-focus.js:61 |
 | `installButton` | var | js/core/service/worker-register.js:84 |
 | `installButton` | var | js/core/service/worker-register.js:102 |
 | `instance` | var | js/ui/third/tippy.js:19 |
@@ -5203,6 +5213,7 @@
 | `items` | var | js/simulator/renderers/visual-novel-renderer.js:64 |
 | `items` | var | js/simulator/renderers/visual-novel-renderer.js:82 |
 | `items` | var | js/simulator/site-ui-parts.js:152 |
+| `itextProto` | var | scripts/fabric-text-focus-smoke-test.cjs:46 |
 | `iw` | var | js/assets/asset-store.js:370 |
 | `job` | var | js/assets/image2-client.js:28 |
 | `jobId` | var | js/ai/ai-settings.js:306 |
@@ -5453,6 +5464,7 @@
 | `left` | var | js/ai/manga-importer.js:1857 |
 | `left` | var | js/canvas-manager.js:758 |
 | `left` | var | js/core/font/font-dropdown.js:182 |
+| `left` | var | js/core/util/fabric-text-focus.js:24 |
 | `left` | var | js/core/util/fabric-util.js:744 |
 | `left` | var | js/core/util/image-util.js:105 |
 | `left` | var | js/core/util/png-bit-depth.js:189 |
@@ -5762,6 +5774,7 @@
 | `makeMangaPanel` | function | js/simulator/story-to-manga.js:87 |
 | `makeNormalPanel` | function | js/ai/director/scene-plan-service.js:16 |
 | `makePageLayerHeader` | function | js/layer/layer-management.js:50 |
+| `makePrototype` | function | scripts/fabric-text-focus-smoke-test.cjs:17 |
 | `makeRect` | function | js/simulator/extra-renderers/renderer-kit.js:140 |
 | `makeStoreCard` | function | js/simulator/simulator-studio.js:365 |
 | `makeText` | function | js/simulator/chat-renderer.js:40 |
@@ -6703,6 +6716,7 @@
 | `onStage` | var | js/simulator/renderers/visual-novel-renderer.js:97 |
 | `onTemplateInserted` | function | js/ui/beginner-guide.js:234 |
 | `onUp` | function | js/ui/visual-ps-tools.js:478 |
+| `once` | var | scripts/fabric-text-focus-smoke-test.cjs:132 |
 | `onePanelNumber` | var | js/ai/prompt/auto/auto-generation.js:35 |
 | `onerror` | global | js/core/global-error-handler.js:3 |
 | `online` | var | js/ai/ai-management.js:118 |
@@ -6793,6 +6807,7 @@
 | `opts` | var | js/assets/asset-store.js:302 |
 | `opts` | var | js/assets/original-starter-pack.js:85 |
 | `opts` | var | js/assets/site-ui-pack.js:64 |
+| `opts` | var | js/core/util/fabric-text-focus.js:21 |
 | `opts` | var | js/simulator/site-ui-parts.js:132 |
 | `orderKey` | var | js/ai/prompt/auto/prompt-map.js:12 |
 | `orig` | var | js/ui/visual-studio.js:434 |
@@ -6804,6 +6819,7 @@
 | `originalBox` | var | js/sidebar/panel/knife/knife-split-engine.js:475 |
 | `originalClipPath` | var | js/core/util/html-canvas-util.js:75 |
 | `originalDescriptor` | var | js/ui/custom-html-component.js:52 |
+| `originalFocus` | var | js/core/util/fabric-text-focus.js:19 |
 | `originalH` | var | js/ai/manga-importer.js:1503 |
 | `originalHeight` | var | js/core/util/image-util.js:95 |
 | `originalHeight` | var | js/core/util/image-util.js:121 |
@@ -6811,6 +6827,7 @@
 | `originalHeight` | var | js/sidebar/panel/panel-template.js:516 |
 | `originalImageData` | var | js/core/util/image-util.js:308 |
 | `originalImageDataUrl` | var | js/ai/inpainting/inpaint-editor.js:6 |
+| `originalInit` | var | js/core/util/fabric-text-focus.js:50 |
 | `originalOnMouseUp` | var | js/sidebar/pen/original-brush.js:471 |
 | `originalPoints` | var | js/sidebar/panel/knife/knife-split-engine.js:498 |
 | `originalRenderAll` | var | js/sidebar/panel/panel-manager.js:737 |
@@ -7172,6 +7189,9 @@
 | `passed` | var | js/core/debug.js:34 |
 | `passed` | var | js/core/debug.js:41 |
 | `passed` | var | js/core/debug.js:47 |
+| `patchIdx` | var | scripts/fabric-text-focus-smoke-test.cjs:140 |
+| `patchTextPrototype` | function | js/core/util/fabric-text-focus.js:44 |
+| `patched` | var | js/core/util/fabric-text-focus.js:63 |
 | `path` | var | js/ai/angle/camera-widget.js:212 |
 | `path` | var | js/assets/asset-scanner.js:69 |
 | `path` | var | js/assets/asset-store.js:98 |
@@ -7185,6 +7205,7 @@
 | `path` | var | scripts/check-translations.cjs:3 |
 | `path` | var | scripts/custom-brush-smoke-test.cjs:3 |
 | `path` | var | scripts/cutout-presets-smoke-test.cjs:3 |
+| `path` | var | scripts/fabric-text-focus-smoke-test.cjs:7 |
 | `path` | var | scripts/gen-project-index.cjs:5 |
 | `path` | var | scripts/generate-original-starter-svgs.cjs:2 |
 | `path` | var | scripts/generate-site-ui-svgs.cjs:2 |
@@ -7580,6 +7601,7 @@
 | `promptUrl` | var | js/ai/comfyui/v2/comfyui-util-v2.js:377 |
 | `prompts` | var | js/ui/prompt-manager.js:36 |
 | `props` | var | js/sidebar/text/text-effect.js:426 |
+| `proto` | var | scripts/fabric-text-focus-smoke-test.cjs:128 |
 | `provider` | var | js/ai/ai-management.js:33 |
 | `provider` | var | js/ai/ai-management.js:39 |
 | `provider` | var | js/ai/ai-management.js:67 |
@@ -8287,6 +8309,7 @@
 | `root` | var | js/simulator/extra-renderer-factory.js:330 |
 | `root` | var | scripts/custom-brush-smoke-test.cjs:6 |
 | `root` | var | scripts/cutout-presets-smoke-test.cjs:6 |
+| `root` | var | scripts/fabric-text-focus-smoke-test.cjs:10 |
 | `root` | var | scripts/gen-project-index.cjs:7 |
 | `root` | var | scripts/image-export-integration-test.cjs:10 |
 | `root` | var | scripts/image-export-smoke-test.cjs:6 |
@@ -8619,7 +8642,9 @@
 | `scripts` | var | scripts/gen-project-index.cjs:396 |
 | `scripts` | var | scripts/gen-project-index.cjs:494 |
 | `scrollLeft` | var | js/ui/bottom-bar.js:346 |
+| `scrollRoot` | var | scripts/fabric-text-focus-smoke-test.cjs:13 |
 | `scrollWidth` | var | js/ui/bottom-bar.js:275 |
+| `scroller` | var | js/core/util/fabric-text-focus.js:23 |
 | `sdWebUIHost` | var | js/core/settings.js:35 |
 | `sdWebUIPort` | var | js/core/settings.js:34 |
 | `sdwebuiApiHeartbeat` | function | js/ai/sdwebui/sdwebui-multi-call-api.js:143 |
@@ -8813,7 +8838,7 @@
 | `setActive` | function | js/ai/provider/provider-registry.js:29 |
 | `setActiveGroup` | function | js/simulator/chat-controller.js:212 |
 | `setAttributes` | function | js/sidebar/text/custom/custom-text-util.js:7 |
-| `setAutoSizeingControlMini` | function | index.html:2754 |
+| `setAutoSizeingControlMini` | function | index.html:2755 |
 | `setB` | var | js/ai/comfyui/util/comfyui-util.js:83 |
 | `setB` | var | js/ai/comfyui/util/comfyui-util.js:106 |
 | `setBrushSize` | function | js/ai/inpainting/inpaint-mask.js:131 |
@@ -9052,6 +9077,7 @@
 | `source` | var | js/simulator/story-engine.js:87 |
 | `source` | var | js/simulator/story-engine.js:199 |
 | `source` | var | js/simulator/story-to-manga.js:140 |
+| `source` | var | scripts/fabric-text-focus-smoke-test.cjs:11 |
 | `source` | var | scripts/image-export-integration-test.cjs:65 |
 | `source` | var | scripts/image-export-smoke-test.cjs:7 |
 | `source` | var | scripts/png-bit-depth-smoke-test.cjs:8 |
@@ -9677,6 +9703,7 @@
 | `tag` | var | js/simulator/simulator-studio.js:1092 |
 | `tag` | var | js/ui/beginner-guide.js:26 |
 | `tag` | var | scripts/gen-project-index.cjs:272 |
+| `tagEnd` | var | scripts/fabric-text-focus-smoke-test.cjs:143 |
 | `tagFrequencies` | var | js/dashboard/performance-storage.js:545 |
 | `tagLabel` | var | js/ui/imagePromptHelper/image-prompt-helper.js:542 |
 | `tagList` | var | js/dashboard/prompt-frequency-storage.js:46 |
@@ -9685,6 +9712,7 @@
 | `tagParts` | function | js/simulator/extra-renderer-factory.js:92 |
 | `tagSelect` | var | js/ai/prompt/auto/character-card-manager.js:255 |
 | `tagSelect` | var | js/ai/prompt/auto/character-card-manager.js:439 |
+| `tagStart` | var | scripts/fabric-text-focus-smoke-test.cjs:142 |
 | `tagStats` | var | js/dashboard/dashboard-ui.js:291 |
 | `tagStats` | var | js/dashboard/dashboard-ui.js:935 |
 | `tagStats` | var | js/dashboard/performance-storage.js:546 |
@@ -9724,6 +9752,7 @@
 | `target` | var | js/assets/asset-library-controller.js:195 |
 | `target` | var | js/canvas-manager.js:850 |
 | `target` | var | js/core/manga-page-size.js:207 |
+| `target` | var | js/core/util/fabric-text-focus.js:70 |
 | `target` | var | js/core/util/load-util.js:16 |
 | `target` | var | js/fabric/fabric-management.js:338 |
 | `target` | var | js/layer/blend/blend.js:134 |
@@ -9956,6 +9985,7 @@
 | `textOf` | function | js/ai/prompt/novelai-composition-director.js:117 |
 | `textOf` | function | scripts/novelai-batch-tools.mjs:139 |
 | `textOfPipeline` | function | js/ai/panel-pipeline-review.js:18 |
+| `textProto` | var | scripts/fabric-text-focus-smoke-test.cjs:48 |
 | `textValue` | function | js/simulator/chat-renderer.js:9 |
 | `textValue` | function | js/simulator/extra-renderers/renderer-kit.js:25 |
 | `textValue` | function | js/simulator/story-engine.js:19 |
@@ -9973,6 +10003,7 @@
 | `textbox` | var | js/sidebar/speechBubble/speech-bubble-text.js:81 |
 | `textbox` | var | js/sidebar/speechBubble/speech-bubble-text.js:316 |
 | `textbox` | var | js/sidebar/text/text-effect.js:310 |
+| `textboxProto` | var | scripts/fabric-text-focus-smoke-test.cjs:47 |
 | `texture` | var | js/ai/angle/camera-widget.js:86 |
 | `texture` | var | js/layer/blend/blend.js:193 |
 | `theme` | var | js/simulator/chat-controller.js:183 |
@@ -10161,6 +10192,7 @@
 | `top` | var | js/ai/manga-importer.js:1858 |
 | `top` | var | js/canvas-manager.js:759 |
 | `top` | var | js/core/font/font-dropdown.js:183 |
+| `top` | var | js/core/util/fabric-text-focus.js:25 |
 | `top` | var | js/core/util/fabric-util.js:743 |
 | `top` | var | js/core/util/image-util.js:106 |
 | `top` | var | js/core/util/share-util.js:5 |
@@ -10649,6 +10681,7 @@
 | `vm` | var | scripts/asset-library-smoke-test.cjs:2 |
 | `vm` | var | scripts/custom-brush-smoke-test.cjs:4 |
 | `vm` | var | scripts/cutout-presets-smoke-test.cjs:4 |
+| `vm` | var | scripts/fabric-text-focus-smoke-test.cjs:8 |
 | `vm` | var | scripts/image-export-integration-test.cjs:7 |
 | `vm` | var | scripts/image-export-smoke-test.cjs:4 |
 | `vm` | var | scripts/image2-interface-smoke-test.cjs:2 |

@@ -11,6 +11,7 @@
 | `npm run test:assets` | scripts/asset-library-smoke-test.cjs |  |
 | `npm run test:brushes` | scripts/custom-brush-smoke-test.cjs |  |
 | `npm run test:cutout` | scripts/cutout-presets-smoke-test.cjs |  |
+| `npm run test:fabric-text-focus` | scripts/fabric-text-focus-smoke-test.cjs | fabric の編集用 textarea がスクロールを起こさないことを検証する。 |
 | `npm run test:image-export` | scripts/image-export-smoke-test.cjs |  |
 | `npm run test:image-export-integration` | scripts/image-export-integration-test.cjs | 位深度と画素プレビューの統合テスト。 |
 | `npm run test:image2` | scripts/image2-interface-smoke-test.cjs |  |
@@ -37,6 +38,7 @@
 | `npm run test:assets` | `js/assets/asset-manifest.js`, `js/assets/asset-pack.js`, `js/assets/asset-scanner.js`, `js/assets/asset-store.js`, `js/assets/github-free-pack.js`, `js/assets/original-starter-pack.js`, `js/assets/site-ui-pack.js`, `js/simulator/site-ui-parts.js` |
 | `npm run test:brushes` | `js/sidebar/pen/brush-presets.js`, `js/sidebar/pen/custom-brush.js` |
 | `npm run test:cutout` | `js/local-tools/cutout-presets.js`, `js/local-tools/local-tools-client.js` |
+| `npm run test:fabric-text-focus` | `js/core/util/fabric-text-focus.js` |
 | `npm run test:image-export` | `js/canvas-manager.js`, `js/core/compression/project-compression.js`, `js/core/manga-page-size.js`, `js/core/util/image-util.js`, `js/project-management.js` |
 | `npm run test:image-export-integration` | `js/core/manga-page-size.js`, `js/core/util/image-util.js`, `js/core/util/png-bit-depth.js` |
 | `npm run test:image2` | `js/assets/image2-client.js`, `js/assets/image2-job-store.js` |
@@ -73,6 +75,17 @@
 ### `npm run test:cutout`
 
 - http://127.0.0.1:8765
+
+### `npm run test:fabric-text-focus`
+
+- IText にパッチが入っていない
+- Textbox がパッチされた initHiddenTextarea を継承していない
+- VerticalTextbox が IText のパッチを継承していない
+- scroll 位置
+- パッチ無しで再現しないとテストが意味をなさない
+- preventScroll 無視実装で縦スクロールが戻っていない
+- preventScroll 無視実装で横スクロールが戻っていない
+- 再実行で initHiddenTextarea が二重ラップされた
 
 ### `npm run test:image-export`
 

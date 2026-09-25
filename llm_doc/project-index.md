@@ -21,16 +21,16 @@
 | 種別 | 件数 |
 |------|------|
 | .bat | 14 |
-| .cjs | 22 |
+| .cjs | 23 |
 | .css | 40 |
 | .html | 11 |
-| .js | 233 |
+| .js | 234 |
 | .mjs | 2 |
 | .ps1 | 3 |
 | .py | 9 |
-| シンボル | 10936 |
+| シンボル | 10969 |
 | DOM id 定義 | 637 |
-| script 読み込み | 214 |
+| script 読み込み | 215 |
 | stylesheet 読み込み | 38 |
 
 ## 除外ディレクトリ
@@ -81,6 +81,7 @@
 | `NaiComicTimeline` | js/simulator/timeline.js:35 |
 | `NaiCustomBrush` | js/sidebar/pen/custom-brush.js:268 |
 | `NaiCutoutPresets` | js/local-tools/cutout-presets.js:96 |
+| `NaiFabricTextFocus` | js/core/util/fabric-text-focus.js:72 |
 | `NaiImage2Client` | js/assets/image2-client.js:38 |
 | `NaiImage2Controller` | js/assets/image2-controller.js:16 |
 | `NaiImage2JobStore` | js/assets/image2-job-store.js:13 |
@@ -157,7 +158,7 @@
 |---------|------|------|
 | js/ai/comfyui/v2/comfyui-default-object-info.js | 10475 |  |
 | js/ui/third/i18next.js | 4686 | "yyyyMMddHHmmss_SSS": { |
-| index.html | 3101 |  |
+| index.html | 3102 |  |
 | js/ai/manga-importer.js | 2524 |  |
 | js/ai/comfyui/v2/comfyui_workflow/comfyui-t2i-default-workflows.js | 2005 |  |
 | js/ai/prompt/novelai-composition-director.js | 1208 |  |
