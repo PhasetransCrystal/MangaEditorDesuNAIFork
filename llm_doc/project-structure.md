@@ -1,5 +1,19 @@
 # プロジェクト構造
 
+## まず索引を引く
+
+ディレクトリを眺める前に、目的別の索引を使ってください。
+
+| 知りたいこと | 見るファイル |
+|-------------|-------------|
+| 機能から入口ファイル・主要関数・DOM id・テストを引く | `llm_doc/feature-map.md` |
+| 横断索引の入口（シンボル / DOM id / ファイル / 読み込み順 / テスト） | `llm_doc/project-index.md` |
+| 関数やグローバルがどこで定義されているか | `llm_doc/index/symbols.md` |
+| id を参照している JS を逆引き | `llm_doc/index/dom-ids.md` |
+| script/CSS の読み込み順と `?v=` の現在値 | `llm_doc/index/load-order.md` |
+
+索引は `npm run index` で再生成、`npm run check:index` で鮮度確認できます（`llm_doc/feature-map.md` は手作業）。
+
 ## ディレクトリ構成
 ```
 manga-editor-desu/
@@ -71,6 +85,7 @@ new fabric.Canvas("mangaImageCanvas",{
 4. **グローバル変数** - `canvas`, `stateStack`, `ModeManager`等
 
 ## script読み込み順（index.html）
+正確な現在値（ファイルごとの `?v=` と行番号）は `llm_doc/index/load-order.md` にあります。以下は概略です。
 1. サードパーティ（fabric.js, i18next, hotkeys等）
 2. core（logger, settings, error handler）
 3. fabric管理

@@ -111,9 +111,13 @@ getText("keyName")  // i18next.t()のラッパー
 - 唯一の真実は `NaiMangaPageSize.planExportPage(dpi, baseWidth, baseHeight)`（`js/core/manga-page-size.js`）。`ImageUtil.resolveExportMultiplierForDpi` もプレビューもこの関数を通るので、表示画素と実出力は構造上必ず一致する。
 - 基準は `PAGE_MM` の A4（竖 210x297mm / 横 297x210mm）。倍率は「切り捨て後の長辺が目標値と一致する区間の中点」を採る。単純な `target/base` だと丸めで 1px ずれ、プレビューと実出力が食い違う。
 - 上限は `EXPORT_MAX_EDGE` 8192 / `EXPORT_MAX_PIXELS` 40M。`planExportPage` が上限内に収まる最大長辺を返し、`capped` が立つと `#exportPxCappedNote` を表示する。
-- 画素欄の編集は `applyExportPixelEdge` が `resolveDpiForPixelEdge`（0.01 DPI 刻みの二分探索）で DPI を逆算する。往復しても画素がぶれないのはこのため。範囲外は null を返す。
-- DPI は `SETTINGS_SCHEMA.canvasDpi`、位深度は `SETTINGS_SCHEMA.outputBitDepth` として自動保存される（再起動しても保持）。
-- 範囲外の画素を入れた場合は、手が止まった頃（800ms）に計画値へ戻す。表示された数字は実出力と必ず一致させる必要があるため、無効値を残してはいけない。number の blur/change は発火しないことがあるので、タイマーで確定させる。
+- 画素欄の確定は `commitExportPixelEdge`。`resolveDpiForPixelEdge`（0.01 DPI 刻みの二分探索）で DPI を逆算する。往復しても画素がぶれないのはこのため。範囲外は null を返す。
+- **入力中は値を書き戻さない。** 穋所の無効値リバート（旧 `scheduleExportPixelRevert` / 800ms タイマー）は廃止した。打っている途中に数字が戻ると入力できないため。検証と確定は **blur（フォーカスが外れた時）と Enter** のみで行う。number の `change` はブラウザ次第で発火しないため、Enter は `keydown` で明示的に拾う。
+- 編集中の欄は `exportPixelEditing` / `exportDpiEditing` で記録し、`updateExportPagePlanDisplay` と `syncExportDpiField` はその欄に触らない。
+- DPI は `SETTINGS_SCHEMA.canvasDpi`、位深度は `SETTINGS_SCHEMA.outputBitDepth` として自動保存される（再起動しても保持）。`setExportDpi` はプログラム書き換え時に `input` を明示発火して自動保存に載せる（`change` は発火しないため）。
+- 範囲外や無効な DPI を入れた場合は、既定値 300 ではなく **直前の有効値**へ戻す。`lastValidExportDpi` がその値を覚え、`exportDpiFallback()` が返す。負数や空欄など「意味の無い」入力は `NaiMangaPageSize.normalizeExportDpi` が null を返し、範囲外の正数は従来どおり `EXPORT_DPI_MIN` / `EXPORT_DPI_MAX` へ丸める。丸めた場合は `notifyExportDpiRange` が一度だけ通知する。
+- 画素欄の範囲外は `notifyExportPixelRange` が一度だけ通知し、確定値へ戻す（入力中は戻さない）。
+- `saveSettingsLocalStrage` は `sanitizeSettingsValueForStorage` で保存前に DPI を検証する。入力途中の `-5` をそのまま保存すると、次回起動時に読み込んだ値が 300 に化けて「設定が勝手に戻る」ように見える。不正値の間は直前の保存値を据え置く。
 - 保存値の読み込みは `canvas-manager.js` の DOMContentLoaded より後れるため、読み込み後に `syncExportPlanAfterSettingsLoad`（project-management.js）がプレビューを作り直す。これを忘れると起動直後だけ DPI と画素表示が食い違う。
 
 ## ModeManager

@@ -76,6 +76,20 @@ if(dpi>EXPORT_DPI_MAX)dpi=EXPORT_DPI_MAX;
 return dpi;
 }
 
+// UI 入力の検証用。数値として意味があり範囲内なら 0.01 刻みの値を返し、
+// 空欄・負数・非数値のように「意味の無い」入力は null を返す。
+// 範囲外の正数は従来どおり MIN/MAX へ丸める（打ち間違いではなく指定ミスのため）。
+// null を返した時は、呼び出し側（canvas-manager）が直前の有効値へ戻す。
+function normalizeExportDpi(value){
+var text=String(value===undefined||value===null?"":value).trim();
+if(!text)return null;
+var dpi=parseFloat(text);
+if(!isFinite(dpi)||dpi<=0)return null;
+if(dpi<EXPORT_DPI_MIN)dpi=EXPORT_DPI_MIN;
+if(dpi>EXPORT_DPI_MAX)dpi=EXPORT_DPI_MAX;
+return Math.round(dpi*100)/100;
+}
+
 function pixelsForDpi(mmWidth,mmHeight,dpi){
 var value=resolveExportDpi(dpi);
 return {
@@ -228,6 +242,7 @@ isLandscapeSize:isLandscapeSize,
 pageMillimeters:pageMillimeters,
 pageMillimetersForSize:pageMillimetersForSize,
 resolveExportDpi:resolveExportDpi,
+normalizeExportDpi:normalizeExportDpi,
 pixelsForDpi:pixelsForDpi,
 dpiForPixelAxis:dpiForPixelAxis,
 EXPORT_MAX_EDGE:EXPORT_MAX_EDGE,

@@ -30,6 +30,21 @@ npm install
 npm run test:layout
 ```
 
+## 项目索引（改完功能请重新生成）
+
+`llm_doc/feature-map.md` 是手写的「功能 → 入口文件 → 主要函数 → DOM id → 测试」对照表，用来避免每次
+都重新通读整个项目；`llm_doc/project-index.md` 与 `llm_doc/index/` 下的 symbols / dom-ids / files /
+load-order / tests 是由 `scripts/gen-project-index.cjs` 扫描源码自动生成的横断索引（含每个函数定义在
+哪个文件第几行、每个 id 被哪些 JS 引用、`?v=` 当前值、各测试在验证什么）。改动代码后请执行：
+
+```bash
+npm run index
+npm run check:index
+```
+
+`npm run check:index` 在索引与工作区不一致时会以非零退出，提交前用它确认索引没有过期。
+`llm_doc/feature-map.md` 不参与自动生成，功能入口变化时请手动更新。
+
 ## 代码风格（沿用上游）
 
 - 原有 Desu 源码多为无缩进风格；新增 `js/simulator/` 等文件可读性优先。

@@ -136,6 +136,8 @@ assert.ok(file.includes('"outputImageFormat"'),lang+' に outputImageFormat が�
 assert.ok(file.includes('"outputImageQuality"'),lang+' に outputImageQuality が無い');
 });
 
+const pageSizeSource=fs.readFileSync(path.join(root,'js/core/manga-page-size.js'),'utf8');
+
 // --- 設定が永続化対象に含まれる ---
 const projectManagement=fs.readFileSync(path.join(root,'js/project-management.js'),'utf8');
 assert.ok(projectManagement.includes("outputImageFormat:{id:'outputImageFormat'"),'形式が設定スキーマに無い');
@@ -148,6 +150,12 @@ assert.ok(/getCropAndDownloadLinkByMultiplier\(1,'jpeg',[\d.]+\)/.test(compressi
 // --- 形式が PNG のとき品質セレクトを無効化する ---
 const canvasManager=fs.readFileSync(path.join(root,'js/canvas-manager.js'),'utf8');
 assert.ok(canvasManager.includes('syncExportQualityAvailability'),'品質セレクト同期が未実装');
+assert.ok(pageSizeSource.includes('normalizeExportDpi'),'DPI 正規化が manga-page-size.js に無い');
+assert.ok(pageSizeSource.includes('normalizeExportDpi:normalizeExportDpi'),'DPI 正規化が公開されていない');
+// 不正な DPI は保存しない。しないと次回起動時に 300 へ化ける。
+assert.ok(projectManagement.includes('sanitizeSettingsValueForStorage'),'保存値の検証が無い');
+assert.ok(/sanitizeSettingsValueForStorage\(cfg,el,/.test(projectManagement),'保存時に sanitize を呼んでいない');
+assert.ok(projectManagement.includes("cfg.id!=='outputDpi'"),'DPI 以外を改変しない');
 
 // --- data URL のバイト長換算 ---
 assert.equal(ImageUtil.exportDataUrlByteLength('data:image/png;base64,AAAA'),3,'4 文字は 3 バイト');
@@ -337,7 +345,19 @@ assert.ok(canvasManager.includes('syncExportSizeEstimate'),'概算同期が未�
 assert.ok(canvasManager.includes('scheduleExportSizeEstimate'),'概算の遅延更新が未実装');
 assert.ok(canvasManager.includes('canvas.on(eventName'),'描画変更で概算を更新する');
 assert.ok(canvasManager.includes('syncExportPagePlan'),'画素プレビュー同期が未実装');
-assert.ok(canvasManager.includes('applyExportPixelEdge'),'画素入力からの逆算が未実装');
+assert.ok(canvasManager.includes('commitExportPixelEdge'),'画素入力からの逆算が未実装');
+// 画素欄は入力中に書き戻さない。blur でだけ確定する。
+assert.ok(canvasManager.includes("element.addEventListener('blur'"),'画素欄の確定が blur に繋がっていない');
+assert.ok(canvasManager.includes('exportPixelEditing'),'編集中の欄を除外する仕組みが無い');
+assert.ok(!canvasManager.includes('scheduleExportPixelRevert'),'周期的な値の強制戻しが残っている');
+// DPI 欄も入力中に書き戻さず、blur / Enter で確定する。
+assert.ok(canvasManager.includes('exportDpiEditing'),'DPI 欄の編集中判定が無い');
+assert.ok(canvasManager.includes('lastValidExportDpi'),'直前の有効 DPI を覚えていない');
+assert.ok(canvasManager.includes('normalizeExportDpiInput'),'DPI 入力の検証が無い');
+// 負数や空欄は既定 300 ではなく直前の有効値へ戻す。
+assert.ok(canvasManager.includes('exportDpiFallback'),'直前の有効値へのフォールバックが無い');
+assert.ok(canvasManager.includes('notifyExportDpiRange'),'範囲外 DPI の通知が無い');
+assert.ok(canvasManager.includes('commitExportDpi'),'DPI の確定処理が無い');
 assert.ok(canvasManager.includes('syncExportBackgroundLabel'),'背景色ラベルの同期が未実装');
 assert.ok(canvasManager.includes('syncExportBitDepthState'),'位深度の有効/無効同期が未実装');
 
