@@ -11,6 +11,7 @@
 | 関数やグローバルがどこで定義されているか | `llm_doc/index/symbols.md` |
 | id を参照している JS を逆引き | `llm_doc/index/dom-ids.md` |
 | script/CSS の読み込み順と `?v=` の現在値 | `llm_doc/index/load-order.md` |
+| 本機サービスの構成・停止方法・オフラインで開ける理由 | `llm_doc/backend-and-offline.md` |
 
 索引は `npm run index` で再生成、`npm run check:index` で鮮度確認できます（`llm_doc/feature-map.md` は手作業）。
 
@@ -113,3 +114,5 @@ new fabric.Canvas("mangaImageCanvas",{
 - 子プロセスは **Windows Job Object**（`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`）+ `taskkill /T /F` で管理。ウィンドウを閉じると python も終了しポート 8000 が解放される。
 - 8000 が既に本機サービスなら**ブラウザだけ**開き、他人のプロセスは殺さない。別プログラムが占めている場合は友好なエラーを出して終了コード 1。
 - `NAI_QUIET=1` を付けて起動するのでアクセスログは出ない（未設定時は従来どおり）。失敗時は `user_data\start.log`。
+
+バックエンドのルート一覧、プロキシの詳細、Service Worker キャッシュの挙動、「サーバーを止めてもページが開く」理由は `llm_doc/backend-and-offline.md` を参照。

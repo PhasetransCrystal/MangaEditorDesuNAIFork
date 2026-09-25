@@ -28,6 +28,7 @@
 - `llm_doc/history-and-data.md` - Undo/Redo周りや画像保存の修正時。履歴スタック操作、data:URL制約
 - `llm_doc/translation.md` - UI文言を追加するとき。i18nextのキー書式と8言語の記載例
 - `llm_doc/chrome.md` - Chrome拡張連携の修正時。通信制約と接続手順
+- `llm_doc/backend-and-offline.md` - 本機サービスの起動・停止や「サーバーを止めてもページが開く」を調べるとき。バックエンド構成、プロキシ、Service Worker キャッシュ
 - `llm_doc/review-checklist.md` - コード修正後の見落とし防止。頻出問題と確認回数
 
 

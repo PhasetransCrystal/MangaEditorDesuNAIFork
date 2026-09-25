@@ -88,10 +88,11 @@
 | **起動スクリプト** |  |  |  |  |  |
 | 入口（ASCII のみ） | `一键启动.bat` | `start_manga_editor_nai.bat` を呼ぶ | - | - | `llm_doc/project-structure.md` |
 | 本体 | `start_manga_editor_nai.ps1`, `start_manga_editor_nai.bat` | `start_manga_editor_nai.ps1` | - | - | `llm_doc/project-structure.md` |
-| ローカルサーバ | `99_server.py` | `99_server.py` | - | - | `llm_doc/project-structure.md` |
+| ローカルサーバ（静的配信 + AI プロキシ） | `99_server.py` | `CORSRequestHandler`:393, `do_GET`:693, `do_POST`:625, `is_blocked_static_path`:211, `_proxy_novelai`:458, `_proxy_director`:495, `ThreadedTCPServer`:791 | - | - | `llm_doc/backend-and-offline.md` |
+| 背景除去 sidecar（任意・Python 3.13+ で `cgi` 削除のため要修正） | `local_tools/server.py` | `_read_form`:108, `_file_field`:121, `_options_from_form`:136 | - | - | `llm_doc/backend-and-offline.md` |
 | **サービスワーカー** |  |  |  |  |  |
-| 登録とキャッシュ消去 | `js/core/service/worker-register.js` | `register`:36, `clearCache`:61, `checkInstallState`:72 | - | - | `llm_doc/chrome.md` |
-| キャッシュ定義 | `service-worker.js` | `CACHE_VERSION`:2 | - | - | `llm_doc/chrome.md` |
+| 登録とキャッシュ消去 | `js/core/service/worker-register.js` | `register`:36, `clearCache`:61, `checkInstallState`:72 | `pwa-install-button` | - | `llm_doc/backend-and-offline.md` |
+| キャッシュ定義（停止後も開ける原因） | `service-worker.js` | `CACHE_VERSION`:2 | - | - | `llm_doc/backend-and-offline.md` |
 
 ## 横断的な入口
 
