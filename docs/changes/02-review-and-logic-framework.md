@@ -72,12 +72,12 @@
 ## 4. 设计风险清单
 
 ### [P1] 默认 PNG 导出丢透明度 + 全量重编码
-- 位置：`js/project-management.js:200`、`index.html:478` 默认 `rgb`；`js/core/util/image-util.js:632-643` 对任何非 `argb` 的 PNG 都调用 `encodeExportPng`。
+- 位置：`js/project-management.js:200`、`index.html:478` 默认 `rgb`；`js/core/util/image-util.js:632-644` 对任何非 `argb` 的 PNG 都调用 `encodeExportPng`。
 - 影响：普通 PNG 导出不再是 `canvas.toDataURL` 的原字节，而是解压→RGBA→RGB 压平到背景色→再压缩；对以去背字效为主的工具，默认路径**丢失 alpha** 属疑似回归，且引入全分辨率级别的同步重编码开销（`setTimeout(...,0)` 内同步执行，可能卡主线程）。
 - 建议：默认位深度改为 `argb`，或在"解析后模式等于画布原生默认（RGBA）"时直接返回 `toDataURL` 结果（字节级等价快路径）。
 
 ### [P2] 上限常量与算法重复 —— 已修复
-- 原位置：`js/core/util/image-util.js:5-6` 与 `js/core/manga-page-size.js:123-124` 各定义一份 `EXPORT_MAX_EDGE/EXPORT_MAX_PIXELS`。
+- 原位置（修复前的 `HEAD`，可用 `git show 47e243c^:js/core/util/image-util.js` 复现）：`js/core/util/image-util.js:5-6` 与 `js/core/manga-page-size.js:123-124` 各定义一份 `EXPORT_MAX_EDGE/EXPORT_MAX_PIXELS`。
 - 修复：`image-util.js` 改为从 `NaiMangaPageSize` 读取（未加载时退避同值默认），`manga-page-size.js` 成为**唯一来源**。
 - 现状：代码中只剩 `manga-page-size.js:124-125` 一处字面量；`image-util.js:6-11` 为引用。`resolveExportMultiplier`(兜底) 与 `planExportPage`(口径) 仍是两套实现，但已共用同一常量来源。
 - 回归保护：`scripts/image-export-smoke-test.cjs` 新增用例，把来源常量替换为 1024/1MP 后验证 `resolveExportMultiplier` 跟随变化。
@@ -86,12 +86,12 @@
 本项整体风险很低：均为"同一逻辑写了两遍"，不影响行为。
 
 1. **`restoreGrid` 完全重复**
-   - `js/core/util/image-util.js:674`（`clipCopy` 内）与 `js/core/util/image-util.js:709`（`cropAndDownload` 内）各自定义了一份**逐字符相同**的 `restoreGrid()`：`if(isGridVisible){drawGrid();isGridVisible=true;}`。
+   - `js/core/util/image-util.js:674`（`clipCopy` 内）与 `js/core/util/image-util.js:709`（`cropAndDownload` 内）各自定义了一份**逐字符相同**的 `restoreGrid()`（修复前行号）：`if(isGridVisible){drawGrid();isGridVisible=true;}`。
    - 背景：导出前需 `removeGrid()`，导出后要把网格恢复，两处都复制了这段收尾逻辑。
    - **修复**：抽成模块级 `restoreGridAfterExport()`（`image-util.js:27-33`），`clipCopy` 与 `cropAndDownload` 均改为调用它；两处局部定义已删除。
 
 2. **十六进制转换重复**
-   - `js/canvas-manager.js:220 formatExportColorHex()` 用 `typeof rgbToHex==='function'` 去调用 `js/core/util/image-util.js:775 rgbToHex()`，只多做了一次 `toUpperCase()`；而 `rgbToHex` 已通过 `image-util.js:849` 的别名全局可用。
+   - `js/canvas-manager.js:220 formatExportColorHex()` 用 `typeof rgbToHex==='function'` 去调用 `js/core/util/image-util.js:772 rgbToHex()`，只多做了一次 `toUpperCase()`；而 `rgbToHex` 已通过 `image-util.js:846` 的别名全局可用。
    - **修复**：删除包装函数，`syncExportBackgroundLabel()` 直接调用 `rgbToHex(...).toUpperCase()`（本项属 [P3.3] 第 3 条）。
 
 3. **`png-bit-depth.js` 与其它模块的字节/base64 工具重复**
@@ -110,7 +110,7 @@
 功能正确，但存在冗余执行与**重复事件注册**：
 
 1. **`canvas.on` 监听重复注册（真实缺陷面，已实证）**
-   - `js/canvas-manager.js:618 syncExportSizeEstimate()` 每次被调用都会执行 `canvas.on('object:added'|'object:modified'|'object:removed', ...)`（`:629-633`），该处**没有**像 DOM 元素那样用 `dataset.estimateBound` 去重。
+   - `js/canvas-manager.js:616 syncExportSizeEstimate()` 每次被调用都会执行 `canvas.on('object:added'|'object:modified'|'object:removed', ...)`（`:629-632`），该处**没有**像 DOM 元素那样用 `dataset.estimateBound` 去重。
    - 隔离验证（vm 内直接调用该函数，统计 `canvas.on` 次数）：
      ```
      1x: {"object:added":1,"object:modified":1,"object:removed":1}

@@ -69,6 +69,6 @@ node scripts/manga-page-size-smoke-test.cjs     # manga page size smoke test pas
 
 ## 已知注意点（详见 02 审查文档）
 
-- **[P1，有意设计，未变更]** 默认 PNG 导出会经 `getExportBitDepthForFormat` 走位深度重写，**默认模式 `rgb` 会丢弃透明度**（`js/project-management.js:200` 与 `index.html:477` 的默认值）。这是刻意选择，如需保留透明度请手动选 32位 ARGB。
+- **[P1，有意设计，未变更]** 默认 PNG 导出会经 `getExportBitDepthForFormat` 走位深度重写，**默认模式 `rgb` 会丢弃透明度**（`js/project-management.js:200` 与 `index.html:478` 的默认值）。这是刻意选择，如需保留透明度请手动选 32位 ARGB。
 - **[已修复]** 导出上限常量重复定义问题已消除：现在唯一来源是 `js/core/manga-page-size.js`，`image-util.js` 只引用不重定义。
 - **[P3 遗留，非缺陷]** `image-util.js` 尾部把全部 API 镜像为全局别名，属仓库既有约定；其中本次新增的若干别名暂无外部引用，保持现状即可。
