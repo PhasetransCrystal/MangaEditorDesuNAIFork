@@ -1,9 +1,14 @@
 // image-util.js - Fabric.js画像オブジェクトの処理（変換、WebP、クロップ、反転、色変換など）
 
-// 导出上限。输出像素超过这些值时按比例回退，避免导出图体积无限膨胀。
-// EXPORT_MAX_EDGE: 长边像素上限 / EXPORT_MAX_PIXELS: 总像素上限
-var EXPORT_MAX_EDGE=8192;
-var EXPORT_MAX_PIXELS=40*1000*1000;
+// 导出上限は manga-page-size.js の NaiMangaPageSize を唯一の来源とする
+// （プレビューと実書き出しで同じ値を使うため）。未読込の単体テストだけ、
+// 同じ既定値へ退避する。EXPORT_MAX_EDGE: 長辺 / EXPORT_MAX_PIXELS: 総画素の上限
+var EXPORT_MAX_EDGE=typeof NaiMangaPageSize!=="undefined"&&NaiMangaPageSize.EXPORT_MAX_EDGE
+?NaiMangaPageSize.EXPORT_MAX_EDGE
+:8192;
+var EXPORT_MAX_PIXELS=typeof NaiMangaPageSize!=="undefined"&&NaiMangaPageSize.EXPORT_MAX_PIXELS
+?NaiMangaPageSize.EXPORT_MAX_PIXELS
+:40*1000*1000;
 var EXPORT_FORMATS=['png','jpeg','webp'];
 var EXPORT_BIT_DEPTHS=['gray','rgb','argb'];
 var EXPORT_BIT_DEPTH_DEFAULT='rgb';
@@ -16,6 +21,15 @@ var EXPORT_ESTIMATE_ERROR_MARGIN=1.6;
 var EXPORT_ESTIMATE_OVERHEAD_TILE=8;
 var EXPORT_ESTIMATE_MIN_RATIO=0.5;
 var EXPORT_ESTIMATE_UNIFORM_RATIO=0.1;
+
+// 导出前会先移除网格，这里把网格恢复到导出前的可见状态。
+// clipCopy / cropAndDownload 需要相同的收尾处理，因此统一到这一处。
+function restoreGridAfterExport(){
+if(isGridVisible){
+drawGrid();
+isGridVisible=true;
+}
+}
 
 var ImageUtil={
 createCanvasFromFabricImage:function(fabricImage){
@@ -666,12 +680,6 @@ return ImageUtil.getCropAndDownloadLinkByMultiplier(multiplier,format,quality);
 clipCopy:function(){
 removeGrid();
 // クリップボードは元の画素を保つため、位深度を落とさない 32bit ARGB 固定で書き出す。
-function restoreGrid(){
-if(isGridVisible){
-drawGrid();
-isGridVisible=true;
-}
-}
 return ImageUtil.getCropAndDownloadLinkByMultiplier(
 ImageUtil.resolveExportMultiplierForDpi(
 ($('outputDpi')||{value:300}).value,
@@ -696,23 +704,17 @@ return navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
 createToast("已复制","画面已复制到剪贴板。");
 }).catch(function(error){
 createToastError("复制失败",(error&&error.message)||"无法写入剪贴板。");
-}).then(restoreGrid);
+}).then(restoreGridAfterExport);
 },
 
 cropAndDownload:function(){
 removeGrid();
-function restoreGrid(){
-if(isGridVisible){
-drawGrid();
-isGridVisible=true;
-}
-}
 return ImageUtil.getCropAndDownloadLink().then(function(link){
 link.click();
 ImageUtil.notifyExportLimitReached();
-restoreGrid();
+restoreGridAfterExport();
 }).catch(function(error){
-restoreGrid();
+restoreGridAfterExport();
 createToastError('导出失败',(error&&error.message)||'无法生成导出图片。',5000);
 });
 },

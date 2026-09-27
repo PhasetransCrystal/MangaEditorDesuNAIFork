@@ -119,7 +119,8 @@ if(Math.round(length/25.4*candidate)===pixels)return candidate;
 return resolveExportDpi(ideal);
 }
 
-// 導出画素の上限。image-util.js 側の同名フォールバックと同じ値にしておく。
+// 导出像素的上限。这里是唯一定义处（image-util.js 会引用此值；仅在未加载本文件时
+// 才退避到同一默认值）。两处若不一致，预览与实际导出会不一致，因此不要在别处重定义。
 var EXPORT_MAX_EDGE=8192;
 var EXPORT_MAX_PIXELS=40*1000*1000;
 

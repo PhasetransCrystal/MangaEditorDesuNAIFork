@@ -37,6 +37,8 @@ encodePngDataUrl:function(dataUrl){return Promise.resolve(dataUrl);}
 context.window=context;
 context.globalThis=context;
 vm.createContext(context);
+// 上限常量の唯一来源。実ページと同じ順序で読み込み、参照配線をそのまま検証する。
+vm.runInContext(fs.readFileSync(path.join(root,'js/core/manga-page-size.js'),'utf8'),context,{filename:'manga-page-size.js'});
 vm.runInContext(source,context,{filename:'image-util.js'});
 
 const ImageUtil=context.ImageUtil;
@@ -81,6 +83,24 @@ assert.ok(w*h<=40*1000*1000,'総ピクセル上限: '+dim.join('x')+' -> '+w+'x'
 });
 assert.ok(ImageUtil.resolveExportMultiplier(0,1000,1000)>0,'0 は既定値で処理');
 assert.ok(ImageUtil.resolveExportMultiplier(NaN,1000,1000)>0,'NaN は既定値で処理');
+
+// --- 上限は manga-page-size.js を唯一来源とする ---
+// 参照が生きていれば、来源側の値を差し替えた分だけ上限も動くはず。
+{
+const shrinkSource=fs.readFileSync(path.join(root,'js/core/manga-page-size.js'),'utf8')
+.replace('var EXPORT_MAX_EDGE=8192;','var EXPORT_MAX_EDGE=1024;')
+.replace('var EXPORT_MAX_PIXELS=40*1000*1000;','var EXPORT_MAX_PIXELS=1*1000*1000;');
+const shrinkContext={console,canvas:canvasStub,document:context.document,fabric:{},$:function(){return null;},createToast:function(){},createToastError:function(){},removeGrid:function(){},drawGrid:function(){},isGridVisible:false,NaiPngBitDepth:context.NaiPngBitDepth};
+shrinkContext.window=shrinkContext;
+shrinkContext.globalThis=shrinkContext;
+vm.createContext(shrinkContext);
+vm.runInContext(shrinkSource,shrinkContext,{filename:'manga-page-size.js'});
+vm.runInContext(source,shrinkContext,{filename:'image-util.js'});
+const ShrinkUtil=shrinkContext.ImageUtil;
+const m2=ShrinkUtil.resolveExportMultiplier(50,4096,4096);
+assert.ok(4096*m2<=1024+1,'来源側の長辺上限に追随する: '+(4096*m2));
+assert.ok(4096*m2*4096*m2<=1*1000*1000+1,'来源側の総ピクセル上限に追随する');
+}
 
 // --- 書き出しオプションの組み立て ---
 calls.length=0;
@@ -157,6 +177,14 @@ assert.ok(projectManagement.includes('sanitizeSettingsValueForStorage'),'保存�
 assert.ok(/sanitizeSettingsValueForStorage\(cfg,el,/.test(projectManagement),'保存時に sanitize を呼んでいない');
 assert.ok(projectManagement.includes("cfg.id!=='outputDpi'"),'DPI 以外を改変しない');
 
+// --- P3/P4 の回帰: 重複定義を戻さない / canvas 监听を積み増さない ---
+assert.ok(!/function restoreGrid\s*\(/.test(source),'restoreGrid が再びローカル定義されていない');
+assert.ok(source.includes('function restoreGridAfterExport'),'网格復元は共通ヘルパに一本化');
+assert.equal((source.match(/restoreGridAfterExport\(\)/g)||[]).length,3,'clipCopy/cropAndDownload の2経路+ヘルパ定義の3箇所');
+assert.ok(!canvasManager.includes('function formatExportColorHex'),'formatExportColorHex の薄いラッパが残っていない');
+assert.ok(canvasManager.includes('exportEstimateCanvasBound'),'canvas イベントは 1 回だけ登録する');
+assert.ok(/if\(!exportEstimateCanvasBound&&typeof canvas/.test(canvasManager),'canvas 登録にガードがある');
+
 // --- data URL のバイト長換算 ---
 assert.equal(ImageUtil.exportDataUrlByteLength('data:image/png;base64,AAAA'),3,'4 文字は 3 バイト');
 assert.equal(ImageUtil.exportDataUrlByteLength('data:image/png;base64,AAA='),2,'1 パディングは 2 バイト');
@@ -174,10 +202,10 @@ assert.equal(ImageUtil.formatByteSize(5*1024*1024),'5.0 MB');
 assert.equal(ImageUtil.formatByteSize(3*1024*1024*1024),'3.00 GB');
 assert.equal(ImageUtil.formatByteSize(NaN),'0 B');
 
-// --- DPI から倍率（A5 相当・長辺基準） ---
+// --- DPI から倍率（A4 既定・長辺基準） ---
 const dpiPortrait=ImageUtil.resolveExportMultiplierForDpi(300,1654,2339);
-assert.ok(dpiPortrait>1.0&&dpiPortrait<1.2,'300dpi の A5 縦は約 1.06 倍: '+dpiPortrait);
-assert.ok(Math.abs(dpiPortrait-1654*Math.abs(dpiPortrait)/1654)<1e-9);
+assert.ok(dpiPortrait>1.4&&dpiPortrait<1.6,'300dpi の A4 縦は約 1.5 倍: '+dpiPortrait);
+assert.ok(Math.floor(2339*dpiPortrait)===3508,'長辺は A4 の 300dpi 換算 3508px: '+Math.floor(2339*dpiPortrait));
 const dpiLandscape=ImageUtil.resolveExportMultiplierForDpi(300,2339,1654);
 assert.ok(dpiLandscape>0,'横向きでも正の倍率');
 assert.ok(ImageUtil.resolveExportMultiplierForDpi(600,1654,2339)>dpiPortrait,'高い DPI は大きい倍率');
@@ -236,6 +264,7 @@ encodePngDataUrl:function(dataUrl){return Promise.resolve(dataUrl);}
 estimateContext.window=estimateContext;
 estimateContext.globalThis=estimateContext;
 vm.createContext(estimateContext);
+vm.runInContext(fs.readFileSync(path.join(root,'js/core/manga-page-size.js'),'utf8'),estimateContext,{filename:'manga-page-size.js'});
 vm.runInContext(source,estimateContext,{filename:'image-util.js'});
 const EstimateUtil=estimateContext.ImageUtil;
 
@@ -291,6 +320,7 @@ encodePngDataUrl:function(dataUrl){return Promise.resolve(dataUrl);}
 uniformContext.window=uniformContext;
 uniformContext.globalThis=uniformContext;
 vm.createContext(uniformContext);
+vm.runInContext(fs.readFileSync(path.join(root,'js/core/manga-page-size.js'),'utf8'),uniformContext,{filename:'manga-page-size.js'});
 vm.runInContext(source,uniformContext,{filename:'image-util.js'});
 const uniformEstimate=uniformContext.ImageUtil.estimateExportSize('png','0.92',1,1000,1000);
 assert.equal(uniformEstimate.upperBound,uniformEstimate.bytes,'一様なページは上限として報告する');

@@ -216,19 +216,14 @@ button.addEventListener('click',open);
 button.addEventListener('mousedown',function(event){event.preventDefault();event.stopPropagation();});
 }
 
-// 画布背景の六十六進値ラベルと色の四角形を同期する。
-function formatExportColorHex(color){
-if(typeof rgbToHex==='function'){
-return rgbToHex(String(color||'')).toUpperCase();
-}
-return String(color||'').toUpperCase();
-}
-
+// 画布背景の十六進値ラベルと色の四角形を同期する。
 function syncExportBackgroundLabel(){
 var picker=$('bg-color');
 var label=$('bgColorValue');
 if(!picker)return;
-var hex=formatExportColorHex(picker.value);
+var hex=typeof rgbToHex==='function'
+?rgbToHex(String(picker.value||'')).toUpperCase()
+:String(picker.value||'').toUpperCase();
 if(label)label.textContent=hex;
 var preview=$('bgColorSwatch');
 if(preview)preview.style.backgroundColor=hex;
@@ -536,6 +531,9 @@ update();
 var exportEstimateTimer=null;
 var exportEstimateRunning=false;
 var exportEstimatePending=false;
+// canvas のイベント登録は 1 回だけ。何度 syncExportSizeEstimate が呼ばれても
+// リスナーを積み増さない（積み増すと 1 操作で何度も排程される）。
+var exportEstimateCanvasBound=false;
 
 function renderExportSizeEstimate(){
 var label=$('outputImageEstimate');
@@ -626,7 +624,8 @@ element.dataset.estimateBound='1';
 element.addEventListener('change',function(){scheduleExportSizeEstimate();});
 element.addEventListener('input',function(){scheduleExportSizeEstimate();});
 });
-if(typeof canvas!=='undefined'&&canvas&&canvas.on){
+if(!exportEstimateCanvasBound&&typeof canvas!=='undefined'&&canvas&&canvas.on){
+exportEstimateCanvasBound=true;
 ['object:added','object:modified','object:removed'].forEach(function(eventName){
 canvas.on(eventName,function(){scheduleExportSizeEstimate();});
 });
