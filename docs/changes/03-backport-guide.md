@@ -18,6 +18,7 @@
 | 8 | `css/layout.css` | 新增菜单行样式 | 7 |
 | 9 | `js/ui/third/base-translation/base-*.js` | 8 语言文案键 | 7 |
 | 10 | `scripts/*`、`package.json` | 测试与 npm 脚本（可选，建议随特性一起移植） | 全部 |
+| 11 | 见 §10.5 | 后续一致性修复（常量单一来源 / 去重 / 监听守卫） | 1~7 |
 
 **移植注意**：目标分支若没有 `llm_doc/`，请忽略本次提交中 `llm_doc/**` 的改动（那是索引生成器产物，非功能必需）。
 
@@ -54,7 +55,9 @@
 ## 4. `js/core/util/image-util.js`（核心编排改造）
 
 ### 4.1 文件头常量（插在 `var ImageUtil={` 之前）
-- 新增：`EXPORT_MAX_EDGE/EXPORT_MAX_PIXELS`(5-6)、`EXPORT_FORMATS`(7)、`EXPORT_BIT_DEPTHS/DEFAULT`(8-9)、`EXPORT_QUALITY_MIN/MAX/DEFAULT`(10-12)、`EXPORT_ESTIMATE_*`(13-18)。
+- `EXPORT_MAX_EDGE/EXPORT_MAX_PIXELS`：**不要在此重定义字面量**，改为引用 `NaiMangaPageSize`（见 §10.5.1）。
+- 其余新增：`EXPORT_FORMATS`、`EXPORT_BIT_DEPTHS/DEFAULT`、`EXPORT_QUALITY_MIN/MAX/DEFAULT`、`EXPORT_ESTIMATE_*`。
+- 另需在同一区域新增模块级 `restoreGridAfterExport()`（见 §10.5.2）。
 
 ### 4.2 新增函数（追加到对象内，紧邻既有导出函数）
 - `resolveExportFormat`(383)、`resolveExportMultiplierForDpi`(392)、`resolveExportBitDepth`(412)、`resolveExportBackground`(424)、`encodeExportPng`(453)、`normalizeExportQuality`(463)、`resolveExportMultiplier`(475)、`exportDataUrlByteLength`(492)、`formatByteSize`(505)、`estimateExportSize`(515)、`exportCanvasDataURL`(583)、`notifyExportLimitReached`(593)、`getExportBitDepthForFormat`(601)、`getExportBackgroundColor`(608)、`buildDownloadLink`(632)。
@@ -76,7 +79,7 @@
 ## 5. `js/canvas-manager.js`（UI 同步与接线）
 
 ### 5.1 新增函数（追加到文件内，与既有函数并列）
-`bindExportBackgroundButton`(206)、`formatExportColorHex`(220)、`syncExportBackgroundLabel`(227)、`syncExportBitDepthState`(238)、`currentExportDpi`(267)、`exportDpiFallback`(278)、`normalizeExportDpiInput`(284)、`setExportDpi`(290)、`currentCanvasSizeForPreview`(304)、`exportPlanForOrientation`(317)、`updateExportPagePlanDisplay`(329)、`syncExportDpiField`(349)、`syncExportPagePlan`(366)、`commitExportPixelEdge`(382)、`notifyExportPixelRange`(418)、`notifyExportDpiRange`(429)、`commitExportDpi`(441)、`bindExportPagePlanEvents`(463)、`syncExportQualityAvailability`(519)、`renderExportSizeEstimate`(540)、`scheduleExportSizeEstimate`(610)、`syncExportSizeEstimate`(618)。
+`bindExportBackgroundButton`(206)、`syncExportBackgroundLabel`(`formatExportColorHex` 已并入，见 §10.5.4)、`syncExportBitDepthState`(238)、`currentExportDpi`(267)、`exportDpiFallback`(278)、`normalizeExportDpiInput`(284)、`setExportDpi`(290)、`currentCanvasSizeForPreview`(304)、`exportPlanForOrientation`(317)、`updateExportPagePlanDisplay`(329)、`syncExportDpiField`(349)、`syncExportPagePlan`(366)、`commitExportPixelEdge`(382)、`notifyExportPixelRange`(418)、`notifyExportDpiRange`(429)、`commitExportDpi`(441)、`bindExportPagePlanEvents`(463)、`syncExportQualityAvailability`(519)、`renderExportSizeEstimate`(540)、`scheduleExportSizeEstimate`(610)、`syncExportSizeEstimate`(618)。
 以及模块级状态：`exportPagePlanSyncing`、`exportPixelEditing`、`exportDpiEditing`、`lastValidExportDpi`(256-263)、`exportEstimateTimer/Running/Pending`(536-538)。
 
 ### 5.2 接线点（编辑既有代码）
@@ -123,12 +126,60 @@
 - 移植后验证（应在目标分支全部通过）：
   `npm run test:image-export && npm run test:image-export-integration && npm run test:png-bit-depth && npm run test:fabric-text-focus && npm run test:page-size`。
 
+## 10.5 后续一致性修复（提交 `47e243c`，建议与功能一并 backport）
+
+若只 backport 功能而漏掉这一提交，会出现"能跑但会隐蔽失配/泄漏"的状态。三处改动：
+
+### 10.5.1 导出上限常量：改为单一来源
+- 目标分支若把 `EXPORT_MAX_EDGE/EXPORT_MAX_PIXELS` 直接写在 `image-util.js` 里，请改为引用 `NaiMangaPageSize`：
+  ```
+  var EXPORT_MAX_EDGE=typeof NaiMangaPageSize!=="undefined"&&NaiMangaPageSize.EXPORT_MAX_EDGE
+  ?NaiMangaPageSize.EXPORT_MAX_EDGE
+  :8192;
+  var EXPORT_MAX_PIXELS=typeof NaiMangaPageSize!=="undefined"&&NaiMangaPageSize.EXPORT_MAX_PIXELS
+  ?NaiMangaPageSize.EXPORT_MAX_PIXELS
+  :40*1000*1000;
+  ```
+- `manga-page-size.js` 侧保留唯一定义并更新注释（说明不要在别处重定义）。
+- **前置条件**：`manga-page-size.js` 必须早于 `image-util.js` 加载，否则引用退避到同值默认（行为不变，但失去"单一来源"意义）。
+
+### 10.5.2 网格恢复去重
+- 在 `image-util.js` 顶部常量区之后新增模块级函数：
+  ```
+  function restoreGridAfterExport(){
+  if(isGridVisible){
+  drawGrid();
+  isGridVisible=true;
+  }
+  }
+  ```
+- 删除 `clipCopy` 内的 `function restoreGrid(){...}`，把结尾 `.then(restoreGrid)` 改为 `.then(restoreGridAfterExport)`。
+- 删除 `cropAndDownload` 内的同名局部函数，把两处 `restoreGrid()` 调用改为 `restoreGridAfterExport()`。
+- **语义不变**：仍依赖全局 `isGridVisible`/`drawGrid`。
+
+### 10.5.3 canvas 监听加守卫（P4，重要）
+- 在 `canvas-manager.js` 的 `exportEstimateTimer/Running/Pending` 旁新增 `var exportEstimateCanvasBound=false;`。
+- 把 `syncExportSizeEstimate()` 内的 `canvas.on(...)` 段改为：
+  ```
+  if(!exportEstimateCanvasBound&&typeof canvas!=='undefined'&&canvas&&canvas.on){
+  exportEstimateCanvasBound=true;
+  ['object:added','object:modified','object:removed'].forEach(function(eventName){
+  canvas.on(eventName,function(){scheduleExportSizeEstimate();});
+  });
+  }
+  ```
+- **为什么必须**：不修则每次调用 `syncExportSizeEstimate`（启动至少 2 次 + 每次切换导出格式 1 次）都新增一组监听，长期会话持续累积。功能靠 350ms 防抖掩盖，属隐蔽缺陷。
+
+### 10.5.4 小清理（可选）
+- 删除 `canvas-manager.js` 的 `formatExportColorHex` 薄包装，`syncExportBackgroundLabel()` 直接写
+  `var hex=typeof rgbToHex==='function'?rgbToHex(String(picker.value||'')).toUpperCase():String(picker.value||'').toUpperCase();`
+
 ## 11. 容易踩错的点
 
 1. **Promise 化**：忘记 `await`/`.then` 处理 `getCropAndDownloadLink*`，会导致 `link.click()` 报错。
 2. **脚本顺序**：`png-bit-depth.js` 必须是 `defer` 且早于 `image-util.js`；`fabric-text-focus.js` 必须无 `defer`。
 3. **默认位深度**：目标分支若沿用 `rgb` 默认，普通 PNG 导出会丢透明度（见审查文档 [P1]）；如需保透明，默认改 `argb`。
-4. **常量一致性**：`EXPORT_MAX_EDGE/PIXELS` 需要在 `manga-page-size.js` 与 `image-util.js` 保持同值。
+4. **常量单一来源**：`EXPORT_MAX_EDGE/PIXELS` 只在 `manga-page-size.js` 定义，`image-util.js` 必须引用而非重定义（§10.5.1）。
 5. **缓存版本号**：不改 `?v=` 会造成浏览器沿用旧脚本。
 ---
 

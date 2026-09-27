@@ -5,6 +5,7 @@
 
 ## 1. 需求与现状
 
+> 状态注记：默认导出位深度为 **24位 RGB** 已经确认为**有意设计**（本次不修改）。本评估讨论的是"若要做成所见即所得，如何实现"。
 - 需求：在 灰度 / 24位 RGB / 32位 ARGB 之间切换时，编辑画面即时反映最终导出效果。
 - 现状：位深度**只在导出瞬间**生效，由 `js/core/util/png-bit-depth.js` 编码进 PNG 数据（`encodeExportPng`），编辑画面从不变化。
 - 三种模式的真实像素变换（`png-bit-depth.js:412 convertPixels`）：
@@ -57,10 +58,10 @@ Chrome/Edge/Firefox 均支持 SVG 滤镜 `feColorMatrix` / `feComponentTransfer`
 - `argb`：零成本（`convertPixels` 直接返回原像素）。
 - `gray`/`rgb`：若用 **CSS 滤镜**（A/B），重绘交给合成器，编辑过程**无逐帧 JS 开销**；只在切换模式、改背景色、画布尺寸变化时更新一次。
 - 若用 **像素重算**（C 或 A 的离线变体）：`convertPixels` 是 `O(W×H)`，A4@300dpi（2481×3508）约 **870 万像素**；叠加 `filterScanlines`（`png-bit-depth.js:445`，每行再评 5 种滤波）更重。**不要**挂到常规编辑节拍，只做按需一次性生成。
-- 参照：现有 `estimateExportSize`（`image-util.js:515`）已接受"十余次 `toDataURL` 的防抖计算"，但那是 350ms 防抖的估算，不应叠加全画布重算。
+- 参照：现有 `estimateExportSize`（`image-util.js:529`）已接受"十余次 `toDataURL` 的防抖计算"，但那是 350ms 防抖的估算，不应叠加全画布重算。
 
 触发点清单（若落地）：
-1. `#outputBitDepth` 的 `change`（现仅 `syncExportBitDepthState` 切禁用态，`canvas-manager.js:238`）。
+1. `#outputBitDepth` 的 `change`（现仅 `syncExportBitDepthState` 切禁用态，`canvas-manager.js:233`）。
 2. `#bg-color` 的 `input`（影响压平底色，现为 `syncExportBackgroundLabel`，`:227`）。
 3. `#outputImageFormat` 的 `change`：非 PNG 时位深度不生效，预览应回正常显示（现有禁用逻辑已覆盖）。
 4. 画布尺寸变化：`resizeCanvasByNum`/`resizeCanvas`/`resizeCanvasToObject`（已有 `syncExportPagePlan()` 调用点）。

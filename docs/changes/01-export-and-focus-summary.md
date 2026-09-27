@@ -1,6 +1,6 @@
 # 改动简述：导出分辨率 / 导出格式 / 文本聚焦漂移
 
-面向 PR 描述的汇总文档。范围：fork 起点 `3f63362` 之后的 5 个提交。
+面向 PR 描述的汇总文档。范围：fork 起点 `3f63362` 之后的 **6** 个提交。
 
 ## 提交清单
 
@@ -11,6 +11,7 @@
 | `6f9da34` | fix(export): keep last valid DPI and add a project structure index |
 | `64c1897` | 修复文本选中时的聚焦偏移问题 |
 | `2b6558c` | docs: document the local backend and offline Service Worker behavior |
+| `47e243c` | refactor(export): 合并导出上限常量并修复监听重复注册 |
 
 ## 一、导出分辨率（尺寸/像素）
 
@@ -43,6 +44,15 @@
 
 **修复**：新增 `js/core/util/fabric-text-focus.js`，包装 `IText/Textbox/Text.prototype.initHiddenTextarea`，把 focus 强制为 `preventScroll:true`（并对静默忽略该选项的实现做滚动位置回退）。**不改坐标计算**，因此 IME 候选窗位置不变。
 
+## 四、后续一致性修复（`47e243c`）
+
+前三个特性落地后复审发现的**一致性/可维护性**问题，已一并修复（不改变用户可见行为）：
+
+- **导出上限常量单一来源**：原先 `js/core/util/image-util.js` 与 `js/core/manga-page-size.js` **各定义一份** `EXPORT_MAX_EDGE(8192)/EXPORT_MAX_PIXELS(40MP)`。现 `manga-page-size.js` 为唯一定义处，`image-util.js` 改为引用（未加载时才退避同值）。避免"预览按一份、实际导出按另一份"静默失配。
+- **网格恢复去重**：`clipCopy` 与 `cropAndDownload` 各自复制了一份 `restoreGrid()`，现统一为模块级 `restoreGridAfterExport()`。
+- **背景色标**：删除 `canvas-manager.js` 的 `formatExportColorHex` 薄包装，直接调用既有 `rgbToHex()`。
+- **canvas 监听不再重复注册**：`syncExportSizeEstimate()` 每次调用都会 `canvas.on('object:added/modified/removed')`，导致监听器随调用次数线性累积（启动即 2 组，每次切换导出格式再 +1）。新增 `exportEstimateCanvasBound` 守卫，只注册一次；隔离验证 1/2/3 次调用后计数恒为 `1/1/1`（修复前 `1/2/3`）。
+
 ## 验证
 
 以下脚本在本仓库当前状态均通过：
@@ -59,5 +69,6 @@ node scripts/manga-page-size-smoke-test.cjs     # manga page size smoke test pas
 
 ## 已知注意点（详见 02 审查文档）
 
-- 默认 PNG 导出会经 `getExportBitDepthForFormat` 走位深度重写，**默认模式 `rgb` 会丢弃透明度**（`js/project-management.js:200` 与 `index.html:477` 的默认值）。
-- 导出上限常量在 `js/core/util/image-util.js:5-6` 与 `js/core/manga-page-size.js:123-124` 各存一份，需人工保持一致。
+- **[P1，有意设计，未变更]** 默认 PNG 导出会经 `getExportBitDepthForFormat` 走位深度重写，**默认模式 `rgb` 会丢弃透明度**（`js/project-management.js:200` 与 `index.html:477` 的默认值）。这是刻意选择，如需保留透明度请手动选 32位 ARGB。
+- **[已修复]** 导出上限常量重复定义问题已消除：现在唯一来源是 `js/core/manga-page-size.js`，`image-util.js` 只引用不重定义。
+- **[P3 遗留，非缺陷]** `image-util.js` 尾部把全部 API 镜像为全局别名，属仓库既有约定；其中本次新增的若干别名暂无外部引用，保持现状即可。
