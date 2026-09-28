@@ -40,7 +40,7 @@
 | `ToneNoiseButton` | index.html:1922 |  |
 | `ToneRainButton` | index.html:1930 |  |
 | `ToneSnowButton` | index.html:1926 |  |
-| `a` | index.html:63 | index.html:72, js/ai/comfyui/v2/comfyui-workflow-editor-tab.js:615, js/ai/panel-pipeline-review.js:201, js/assets/asset-pack.js:8, js/core/compression/lz4.js:207, js/core/util/image-util.js:644, js/dashboard/dashboard-ui.js:967, js/local-tools/background-removal-client.js:494, js/project-management.js:42, js/sidebar/pen/pen-tools.js:637, js/simulator/chat-controller.js:295, js/simulator/longshot-exporter.js:29, js/simulator/simulator-controller.js:100, js/simulator/story-composer-controller.js:264, js/svg/manga-panels-image-vertical.js:2, js/ui/imagePromptHelper/image-prompt-helper.js:118, scripts/simulator-timeline-smoke-test.cjs:7 |
+| `a` | index.html:63 | index.html:72, js/ai/comfyui/v2/comfyui-workflow-editor-tab.js:615, js/ai/panel-pipeline-review.js:201, js/assets/asset-pack.js:8, js/core/compression/lz4.js:207, js/core/util/image-util.js:658, js/dashboard/dashboard-ui.js:967, js/local-tools/background-removal-client.js:494, js/project-management.js:42, js/sidebar/pen/pen-tools.js:637, js/simulator/chat-controller.js:295, js/simulator/longshot-exporter.js:29, js/simulator/simulator-controller.js:100, js/simulator/story-composer-controller.js:264, js/svg/manga-panels-image-vertical.js:2, js/ui/imagePromptHelper/image-prompt-helper.js:118, scripts/simulator-timeline-smoke-test.cjs:7 |
 | `add` | index.html:826 | js/ai/comfyui/v2/comfyui-default-object-info.js:2337, js/core/svg/google-icon-names.js:11, js/layer/blend/blend.js:2, js/ui/third/base-translation/base-de.js:147, js/ui/third/base-translation/base-en.js:152, js/ui/third/base-translation/base-es.js:147, js/ui/third/base-translation/base-fr.js:147, js/ui/third/base-translation/base-ja.js:152, js/ui/third/base-translation/base-ko.js:147, js/ui/third/base-translation/base-ru.js:147, js/ui/third/base-translation/base-zh.js:152 |
 | `addHeart` | index.html:930 | js/ui/visual-studio.js:472 |
 | `addHexagon` | index.html:922 | js/ui/visual-studio.js:472 |
@@ -97,10 +97,10 @@
 | `basePrompt_seed` | index.html:2262 | js/ai/prompt/base-event-listener.js:9, js/project-management.js:308 |
 | `basePrompt_width` | index.html:2251 | js/ai/prompt/base-event-listener.js:7, js/project-management.js:310 |
 | `beginnerToolHud` | index.html:2118 | js/ui/beginner-guide.js:21 |
-| `bg-color` | index.html:430 | js/ai/manga-importer.js:1701, js/canvas-manager.js:188, js/core/util/image-util.js:613, js/layer/image-history-management.js:316, js/project-management.js:197, js/sidebar/panel/panel-manager.js:296 |
+| `bg-color` | index.html:430 | js/ai/manga-importer.js:1701, js/canvas-manager.js:188, js/core/util/image-util.js:627, js/layer/image-history-management.js:316, js/project-management.js:197, js/sidebar/panel/panel-manager.js:296 |
 | `bgColorButton` | index.html:431 | js/canvas-manager.js:208 |
-| `bgColorSwatch` | index.html:433 | js/canvas-manager.js:233 |
-| `bgColorValue` | index.html:432 | js/canvas-manager.js:229 |
+| `bgColorSwatch` | index.html:433 | js/canvas-manager.js:228 |
+| `bgColorValue` | index.html:432 | js/canvas-manager.js:222 |
 | `blend` | html/Minual/effect.html:45 | js/sidebar/text/custom/optimized-water-text.js:58, js/ui/third/base-translation/base-de.js:173, js/ui/third/base-translation/base-en.js:178, js/ui/third/base-translation/base-es.js:173, js/ui/third/base-translation/base-fr.js:173, js/ui/third/base-translation/base-ja.js:178, js/ui/third/base-translation/base-ko.js:173, js/ui/third/base-translation/base-ru.js:173, js/ui/third/base-translation/base-zh.js:178 |
 | `blendButton` | index.html:1819 |  |
 | `bold-toggle-btn` | index.html:1651 | js/sidebar/text/text-effect.js:367 |
@@ -117,7 +117,7 @@
 | `bubbleStrokeColor` | index.html:1493 | js/project-management.js:254, js/sidebar/speechBubble/speech-bubble-effect.js:5 |
 | `bubbleStrokewidht` | index.html:1504 | js/project-management.js:257, js/sidebar/speechBubble/speech-bubble-effect.js:3 |
 | `c2bw` | html/Minual/effect.html:25 |  |
-| `canvas-area` | index.html:2096 | js/canvas-manager.js:906 |
+| `canvas-area` | index.html:2096 | js/canvas-manager.js:905 |
 | `canvas-container` | index.html:2162 | js/canvas-manager.js:42, js/sidebar/panel/panel-manager.js:7 |
 | `canvas-help-text` | index.html:2122 | js/ui/beginner-guide.js:62, js/ui/util/mode-change.js:29 |
 | `canvasEmptyHint` | index.html:2166 | js/ui/beginner-guide.js:152, scripts/layout-smoke-test.cjs:66 |
@@ -194,11 +194,11 @@
 | `edit` | index.html:828 | js/core/svg/google-icon-helper.js:64, js/core/svg/google-icon-names.js:11, js/sidebar/panel/panel-manager.js:449, js/ui/canvas-object-menu.js:11, js/ui/util/mode-manager.js:346 |
 | `esApi-controls-mini` | index.html:2207 |  |
 | `esApiControlsPanel` | index.html:2204 |  |
-| `exportPxCappedNote` | index.html:462 | js/canvas-manager.js:341 |
-| `exportPxLandscapeHeight` | index.html:459 | js/canvas-manager.js:491 |
-| `exportPxLandscapeWidth` | index.html:456 | js/canvas-manager.js:491 |
-| `exportPxPortraitHeight` | index.html:450 | js/canvas-manager.js:491 |
-| `exportPxPortraitWidth` | index.html:447 | js/canvas-manager.js:491 |
+| `exportPxCappedNote` | index.html:462 | js/canvas-manager.js:336 |
+| `exportPxLandscapeHeight` | index.html:459 | js/canvas-manager.js:486 |
+| `exportPxLandscapeWidth` | index.html:456 | js/canvas-manager.js:486 |
+| `exportPxPortraitHeight` | index.html:450 | js/canvas-manager.js:486 |
+| `exportPxPortraitWidth` | index.html:447 | js/canvas-manager.js:486 |
 | `featureTable` | html/functionList.html:40 |  |
 | `flexGenH` | index.html:1038 | js/panel/random-cut.js:85, js/sidebar/panel/panel-template.js:226 |
 | `flexGenW` | index.html:1036 | js/panel/random-cut.js:84, js/sidebar/panel/panel-template.js:225 |
@@ -224,7 +224,7 @@
 | `image2Width` | index.html:1315 | js/assets/image2-controller.js:15 |
 | `imageCopy` | index.html:300 | js/ui/third/base-translation/base-de.js:440, js/ui/third/base-translation/base-en.js:400, js/ui/third/base-translation/base-es.js:393, js/ui/third/base-translation/base-fr.js:395, js/ui/third/base-translation/base-ja.js:445, js/ui/third/base-translation/base-ko.js:395, js/ui/third/base-translation/base-ru.js:394, js/ui/third/base-translation/base-zh.js:406 |
 | `imageDownload` | index.html:294 | js/ui/third/base-translation/base-de.js:441, js/ui/third/base-translation/base-en.js:399, js/ui/third/base-translation/base-es.js:392, js/ui/third/base-translation/base-fr.js:394, js/ui/third/base-translation/base-ja.js:446, js/ui/third/base-translation/base-ko.js:394, js/ui/third/base-translation/base-ru.js:393, js/ui/third/base-translation/base-zh.js:405 |
-| `imageInput` | index.html:2100 | js/canvas-manager.js:965 |
+| `imageInput` | index.html:2100 | js/canvas-manager.js:964 |
 | `intro_asset-library-area` | index.html:657 |  |
 | `intro_auto-generate-area` | index.html:662 | js/ui/third/tippy.js:49 |
 | `intro_content` | index.html:2160 | js/ui/canvas-object-menu.js:721 |
@@ -335,9 +335,9 @@
 | `naiHistoryPanel` | index.html:2155 | js/ui/visual-ps-tools.js:555 |
 | `naiMarkPanelsForManualReview` | index.html:1111 | js/ai/panel-pipeline-review.js:23, js/project-management.js:288 |
 | `naiMaterialPreviewStatus` | index.html:2501 | js/ai/ai-settings.js:377 |
-| `naiObjectBiggerBtn` | index.html:2151 | js/canvas-manager.js:943 |
-| `naiObjectFitBtn` | index.html:2152 | js/canvas-manager.js:945 |
-| `naiObjectSmallerBtn` | index.html:2150 | js/canvas-manager.js:944 |
+| `naiObjectBiggerBtn` | index.html:2151 | js/canvas-manager.js:942 |
+| `naiObjectFitBtn` | index.html:2152 | js/canvas-manager.js:944 |
+| `naiObjectSmallerBtn` | index.html:2150 | js/canvas-manager.js:943 |
 | `naiPageSizeBadge` | index.html:2119 | js/canvas-manager.js:53 |
 | `naiPropFill` | index.html:2127 | js/ui/visual-ps-tools.js:229, js/ui/visual-studio.js:227 |
 | `naiPropOpacity` | index.html:2130 | js/ui/visual-studio.js:227 |
@@ -359,11 +359,11 @@
 | `naiToolOptionsBar` | index.html:2124 | js/ui/visual-studio.js:285 |
 | `naiToolOptionsControls` | index.html:2141 | js/ui/visual-studio.js:287 |
 | `naiToolOptionsMain` | index.html:2125 | js/ui/visual-studio.js:286 |
-| `naiZoomFitBtn` | index.html:2147 | js/canvas-manager.js:942 |
-| `naiZoomInBtn` | index.html:2146 | js/canvas-manager.js:940 |
-| `naiZoomLabel` | index.html:2145 | js/canvas-manager.js:646 |
-| `naiZoomLabelHeader` | index.html:2117 | js/canvas-manager.js:646 |
-| `naiZoomOutBtn` | index.html:2144 | js/canvas-manager.js:941 |
+| `naiZoomFitBtn` | index.html:2147 | js/canvas-manager.js:941 |
+| `naiZoomInBtn` | index.html:2146 | js/canvas-manager.js:939 |
+| `naiZoomLabel` | index.html:2145 | js/canvas-manager.js:645 |
+| `naiZoomLabelHeader` | index.html:2117 | js/canvas-manager.js:645 |
+| `naiZoomOutBtn` | index.html:2144 | js/canvas-manager.js:940 |
 | `naiZoomTools` | index.html:2142 |  |
 | `navbar-logo` | index.html:251 | js/ui/util/mode-change.js:44 |
 | `navbarDropdownCanvas` | index.html:421 |  |
@@ -398,13 +398,13 @@
 | `opacity-control` | index.html:1991 | js/ui/control/common-control-management.js:2 |
 | `other-controls-mini` | index.html:2272 | js/ui/ai/auto-prompt-ui.js:83 |
 | `otherControlsPanel` | index.html:2269 |  |
-| `outputBitDepth` | index.html:477 | js/canvas-manager.js:240, js/core/util/image-util.js:604, js/project-management.js:200, js/ui/third/base-translation/base-de.js:404, js/ui/third/base-translation/base-en.js:484, js/ui/third/base-translation/base-es.js:477, js/ui/third/base-translation/base-fr.js:479, js/ui/third/base-translation/base-ja.js:409, js/ui/third/base-translation/base-ko.js:479, js/ui/third/base-translation/base-ru.js:478, js/ui/third/base-translation/base-zh.js:490, scripts/image-export-smoke-test.cjs:338 |
-| `outputBitDepthHint` | index.html:483 | js/canvas-manager.js:248, js/ui/third/base-translation/base-de.js:408, js/ui/third/base-translation/base-en.js:488, js/ui/third/base-translation/base-es.js:481, js/ui/third/base-translation/base-fr.js:483, js/ui/third/base-translation/base-ja.js:413, js/ui/third/base-translation/base-ko.js:483, js/ui/third/base-translation/base-ru.js:482, js/ui/third/base-translation/base-zh.js:494, scripts/image-export-smoke-test.cjs:338 |
-| `outputDpi` | index.html:441 | js/canvas-manager.js:268, js/core/util/image-util.js:653, js/project-management.js:198, scripts/image-export-smoke-test.cjs:130 |
-| `outputImageEstimate` | index.html:499 | js/canvas-manager.js:541, js/ui/third/base-translation/base-de.js:398, js/ui/third/base-translation/base-en.js:478, js/ui/third/base-translation/base-es.js:471, js/ui/third/base-translation/base-fr.js:473, js/ui/third/base-translation/base-ja.js:403, js/ui/third/base-translation/base-ko.js:473, js/ui/third/base-translation/base-ru.js:472, js/ui/third/base-translation/base-zh.js:484 |
+| `outputBitDepth` | index.html:477 | js/canvas-manager.js:235, js/core/util/image-util.js:618, js/project-management.js:200, js/ui/third/base-translation/base-de.js:404, js/ui/third/base-translation/base-en.js:484, js/ui/third/base-translation/base-es.js:477, js/ui/third/base-translation/base-fr.js:479, js/ui/third/base-translation/base-ja.js:409, js/ui/third/base-translation/base-ko.js:479, js/ui/third/base-translation/base-ru.js:478, js/ui/third/base-translation/base-zh.js:490, scripts/image-export-smoke-test.cjs:368 |
+| `outputBitDepthHint` | index.html:483 | js/canvas-manager.js:243, js/ui/third/base-translation/base-de.js:408, js/ui/third/base-translation/base-en.js:488, js/ui/third/base-translation/base-es.js:481, js/ui/third/base-translation/base-fr.js:483, js/ui/third/base-translation/base-ja.js:413, js/ui/third/base-translation/base-ko.js:483, js/ui/third/base-translation/base-ru.js:482, js/ui/third/base-translation/base-zh.js:494, scripts/image-export-smoke-test.cjs:368 |
+| `outputDpi` | index.html:441 | js/canvas-manager.js:263, js/core/util/image-util.js:667, js/project-management.js:198, scripts/image-export-smoke-test.cjs:150 |
+| `outputImageEstimate` | index.html:499 | js/canvas-manager.js:539, js/ui/third/base-translation/base-de.js:398, js/ui/third/base-translation/base-en.js:478, js/ui/third/base-translation/base-es.js:471, js/ui/third/base-translation/base-fr.js:473, js/ui/third/base-translation/base-ja.js:403, js/ui/third/base-translation/base-ko.js:473, js/ui/third/base-translation/base-ru.js:472, js/ui/third/base-translation/base-zh.js:484 |
 | `outputImageEstimateRow` | index.html:496 |  |
-| `outputImageFormat` | index.html:468 | js/canvas-manager.js:239, js/core/util/image-util.js:659, js/project-management.js:199, js/ui/third/base-translation/base-de.js:396, js/ui/third/base-translation/base-en.js:476, js/ui/third/base-translation/base-es.js:469, js/ui/third/base-translation/base-fr.js:471, js/ui/third/base-translation/base-ja.js:401, js/ui/third/base-translation/base-ko.js:471, js/ui/third/base-translation/base-ru.js:470, js/ui/third/base-translation/base-zh.js:482 |
-| `outputImageQuality` | index.html:487 | js/canvas-manager.js:521, js/core/util/image-util.js:660, js/project-management.js:201, js/ui/third/base-translation/base-de.js:397, js/ui/third/base-translation/base-en.js:477, js/ui/third/base-translation/base-es.js:470, js/ui/third/base-translation/base-fr.js:472, js/ui/third/base-translation/base-ja.js:402, js/ui/third/base-translation/base-ko.js:472, js/ui/third/base-translation/base-ru.js:471, js/ui/third/base-translation/base-zh.js:483 |
+| `outputImageFormat` | index.html:468 | js/canvas-manager.js:234, js/core/util/image-util.js:673, js/project-management.js:199, js/ui/third/base-translation/base-de.js:396, js/ui/third/base-translation/base-en.js:476, js/ui/third/base-translation/base-es.js:469, js/ui/third/base-translation/base-fr.js:471, js/ui/third/base-translation/base-ja.js:401, js/ui/third/base-translation/base-ko.js:471, js/ui/third/base-translation/base-ru.js:470, js/ui/third/base-translation/base-zh.js:482 |
+| `outputImageQuality` | index.html:487 | js/canvas-manager.js:516, js/core/util/image-util.js:674, js/project-management.js:201, js/ui/third/base-translation/base-de.js:397, js/ui/third/base-translation/base-en.js:477, js/ui/third/base-translation/base-es.js:470, js/ui/third/base-translation/base-fr.js:472, js/ui/third/base-translation/base-ja.js:402, js/ui/third/base-translation/base-ko.js:472, js/ui/third/base-translation/base-ru.js:471, js/ui/third/base-translation/base-zh.js:483 |
 | `page-landscape` | index.html:777 | js/sidebar/panel/panel-template.js:163 |
 | `page-portrait` | index.html:773 | js/sidebar/panel/panel-template.js:162 |
 | `page-title` | html/functionList.html:37 | html/functionList.html:294 |
@@ -712,7 +712,7 @@
 | `customBrushTaperEnd` | js/sidebar/pen/pen-tools.js:503 |
 | `customBrushTaperStart` | js/sidebar/pen/pen-tools.js:502 |
 | `customBrushTipInput` | js/sidebar/pen/pen-tools.js:595 |
-| `effectEnhanceDarkIntensity` | js/core/util/image-util.js:307, js/sidebar/effect/effect-manager.js:128 |
+| `effectEnhanceDarkIntensity` | js/core/util/image-util.js:321, js/sidebar/effect/effect-manager.js:128 |
 | `effectEnhanceDarkSubmit` | js/sidebar/effect/effect-manager.js:129 |
 | `fabricjs-delete-btn` | js/ui/canvas-object-menu.js:396 |
 | `fabricjs-language-selector` | js/ui/canvas-object-menu.js:2 |

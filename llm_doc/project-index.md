@@ -28,7 +28,7 @@
 | .mjs | 2 |
 | .ps1 | 3 |
 | .py | 9 |
-| シンボル | 10969 |
+| シンボル | 10980 |
 | DOM id 定義 | 637 |
 | script 読み込み | 215 |
 | stylesheet 読み込み | 38 |
@@ -46,7 +46,7 @@
 | `NaiBackgroundRemovalClient` | js/local-tools/background-removal-client.js:514 |
 | `NaiBeginnerGuide` | js/ui/beginner-guide.js:504 |
 | `NaiBrushPresets` | js/sidebar/pen/brush-presets.js:127 |
-| `NaiCanvasView` | js/canvas-manager.js:951 |
+| `NaiCanvasView` | js/canvas-manager.js:950 |
 | `NaiCharacterCards` | js/ai/prompt/auto/character-card-manager.js:535 |
 | `NaiComicAssetBlobStore` | js/assets/asset-blob-store.js:69 |
 | `NaiComicAssetLibraryController` | js/assets/asset-library-controller.js:293 |
@@ -81,7 +81,7 @@
 | `NaiComicTimeline` | js/simulator/timeline.js:35 |
 | `NaiCustomBrush` | js/sidebar/pen/custom-brush.js:268 |
 | `NaiCutoutPresets` | js/local-tools/cutout-presets.js:96 |
-| `NaiFabricTextFocus` | js/core/util/fabric-text-focus.js:72 |
+| `NaiFabricTextFocus` | js/core/util/fabric-text-focus.js:97 |
 | `NaiImage2Client` | js/assets/image2-client.js:38 |
 | `NaiImage2Controller` | js/assets/image2-controller.js:16 |
 | `NaiImage2JobStore` | js/assets/image2-job-store.js:13 |
@@ -90,7 +90,7 @@
 | `NaiImage2UniqueName` | js/assets/image2-client.js:39 |
 | `NaiLocalToolsClient` | js/local-tools/local-tools-client.js:96 |
 | `NaiLocalToolsDefaultUrl` | js/local-tools/local-tools-client.js:97 |
-| `NaiMangaPageSize` | js/core/manga-page-size.js:229 |
+| `NaiMangaPageSize` | js/core/manga-page-size.js:230 |
 | `NaiPageStudio` | js/sidebar/page/page-studio.js:606 |
 | `NaiPanelPipelineReview` | js/ai/panel-pipeline-review.js:258 |
 | `NaiPngBitDepth` | js/core/util/png-bit-depth.js:563 |
@@ -164,13 +164,13 @@
 | js/ai/prompt/novelai-composition-director.js | 1208 |  |
 | js/simulator/simulator-studio.js | 1110 | 模拟器启动页与各类型单开工作区 |
 | js/dashboard/dashboard-ui.js | 1060 | ダッシュボードUIコンポーネント（モーダル表示） |
-| js/canvas-manager.js | 1006 |  |
+| js/canvas-manager.js | 1005 |  |
 | js/core/util/fabric-util.js | 941 |  |
 | js/sidebar/speechBubble/speech-bubble-freehand.js | 868 |  |
 | js/sidebar/pen/pen-tools.js | 855 |  |
 | css/ui/dashboard.css | 853 | Dashboard Modal Overlay |
+| js/core/util/image-util.js | 847 | image-util.js - Fabric.js画像オブジェクトの処理（変換、WebP、クロップ、反転、色変換など） |
 | js/ai/prompt/auto/auto-prompt-util.js | 846 | generatePageList(btmGetGuidsSize()); |
-| js/core/util/image-util.js | 845 | image-util.js - Fabric.js画像オブジェクトの処理（変換、WebP、クロップ、反転、色変換など） |
 | 99_server.py | 810 |  |
 | css/simulator-chat.css | 790 | simulator-chat-area .simulator-chat-panel{ |
 | js/sidebar/panel/panel-manager.js | 769 | function handleSelection(e) { |

@@ -128,13 +128,20 @@ fabric の `IText` / `Textbox` は編集開始時に、1px の隠し `<textarea 
 - その結果 `#resizable-container` の scrollTop/scrollLeft が動き、`canvas.calcOffset()` を通る `canvas._offset` が古くなる。次のクリック座標がずれ、「オブジェクトを再クリックしただけで視野が飛ぶ」ように見える。
 - 症状は配置に依存する。キャンバスの右側に置けば横へ、下側に置けば縦へ飛ぶ。左上付近では起きない。
 
-対策は `js/core/util/fabric-text-focus.js`。`initHiddenTextarea` をラップし、生成直後の textarea の `focus` を `{preventScroll:true}` 付きに差し替える。
+これは 2 段階で起きる。
 
+1. `enterEditing()` の `focus()` が文書をスクロールさせる（既存の修正対象）。
+2. **入力のたびに `updateTextareaPosition()` → `_calcTextareaPosition()` が textarea をカーソル位置（文書座標・画面外）へ `style.left/top` で書き戻し、ブラウザが再び追従スクロールする。** focus は再度呼ばれないので `preventScroll` では止まらない。1 を直しただけでは「入力中にだんだん視野が飛ぶ」が残る。
+
+対策は `js/core/util/fabric-text-focus.js`。`initHiddenTextarea` をラップして textarea を **固定・ゼロサイズ・`overflow:clip` のホスト（`#naiHiddenTextareaHost`、body 直下）へ移し**、文書のスクロール可能領域から外す。これで 1 も 2 も止まる。
+
+- ホストは `position:fixed` なので、中身が `left/top` で画面外座標を指しても文書は伸びない（`overflow:clip`）。したがって 2 の追従スクロールが起こらない。
 - `patchTextPrototype` は **そのプロトタイプ自身が `initHiddenTextarea` を持っている場合だけ**パッチする。`Textbox` は `IText` を継承して持たないため、`IText` を押さえれば `Textbox` もアプリ固有の `VerticalTextbox`（`js/sidebar/text/vertical-textbox.js`、`fabric.IText` を継承）も同時に直る。二重ラップは `__naiFocusNoScrollPatched` で防ぐ。
-- `preventScroll` を渡せない、あるいは黙って無視する実装への保険として、`focus()` の前後で `document.scrollingElement` の scrollTop/scrollLeft を保存し、動いた時だけ戻す。例外時も同じ経路を通る。
-- **`_calcTextareaPosition` の座標系は変えない。** 文書座標のままにしておかないと、IME（日本語入力）の候補ウィンドウが編集位置から離れた場所に出る。抑えるのはスクロールだけ。
-- `index.html` では fabric 本体（2531）の直後、`defer` を付けずに読む。`VerticalTextbox`（2676）や `fabric-management.js`（2721）より先に当てる必要がある。
-- 回帰テストは `npm run test:fabric-text-focus`。継承関係・スクロール不変・二重パッチ防止に加え、**対策を外すとスクロールが再現すること**も検証する（テストが空振りしていないことの確認）。
+- `initHiddenTextarea` は `hiddenTextareaContainer` があればそこへ `appendChild` する fabric の仕様に乗る。ホストは遅延生成し、以後は同じ 1 つを使い回す。
+- 併せて `focus` を `{preventScroll:true}` 付きに差し替え、`preventScroll` を渡せない／黙って無視する実装への保険として `focus()` の前後で `document.scrollingElement` の scrollTop/scrollLeft を保存し、動いた時だけ戻す。例外時も同じ経路を通る。
+- **`_calcTextareaPosition` の座標系は変えない。** textarea の座標は IME（日本語入力）の候補ウィンドウ基準なので、文書座標のまま維持する。抑えるのはスクロールだけ。
+- `index.html` では fabric 本体の直後、`defer` を付けずに読む。`VerticalTextbox` や `fabric-management.js` より先に当てる必要がある。
+- 回帰テストは `npm run test:fabric-text-focus`。継承関係・ホストへの隔離（`fixed` / `overflow:clip`）・スクロール不変（1 と 2 の両方）・二重パッチ防止に加え、**対策を外すと両方のスクロールが再現すること**も検証する（テストが空振りしていないことの確認）。
 
 ## ModeManager
 操作モード切り替え: SELECT, FREEHAND, KNIFE, PEN各種, CROP

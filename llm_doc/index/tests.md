@@ -78,14 +78,14 @@
 
 ### `npm run test:fabric-text-focus`
 
+- naiHiddenTextareaHost
 - IText にパッチが入っていない
 - Textbox がパッチされた initHiddenTextarea を継承していない
 - VerticalTextbox が IText のパッチを継承していない
-- scroll 位置
-- パッチ無しで再現しないとテストが意味をなさない
-- preventScroll 無視実装で縦スクロールが戻っていない
-- preventScroll 無視実装で横スクロールが戻っていない
-- 再実行で initHiddenTextarea が二重ラップされた
+- install だけでホストを作っている（遅延生成のはず）
+- 編集開始後もホストが作られていない
+- ホストが fixed でない
+- ホストが overflow:clip でない
 
 ### `npm run test:image-export`
 

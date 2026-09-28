@@ -137,7 +137,7 @@
 | js/assets/image2-job-store.js | 15 |  |
 | js/assets/original-starter-pack.js | 107 |  |
 | js/assets/site-ui-pack.js | 86 |  |
-| js/canvas-manager.js | 1006 |  |
+| js/canvas-manager.js | 1005 |  |
 | js/core/auto-save.js | 235 | 自動保存機能：IndexedDBへの定期保存と起動時の復元 |
 | js/core/compression/lz4.js | 226 |  |
 | js/core/compression/project-compression.js | 367 |  |
@@ -146,18 +146,18 @@
 | js/core/font/font-manager-core.js | 750 |  |
 | js/core/global-error-handler.js | 17 | グローバルエラーハンドラ（未キャッチのエラーとPromise rejectionを検知） |
 | js/core/logger.js | 206 | ログ出力ユーティリティ（SimpleLogger） |
-| js/core/manga-page-size.js | 255 |  |
+| js/core/manga-page-size.js | 256 |  |
 | js/core/service/worker-register.js | 115 |  |
 | js/core/settings.js | 170 | FabricCanvas2HtmlCanvas Scale |
 | js/core/svg/google-icon-helper.js | 215 |  |
 | js/core/svg/google-icon-names.js | 12 |  |
 | js/core/util/anime-util.js | 11 |  |
 | js/core/util/array-buffer-utils.js | 53 |  |
-| js/core/util/fabric-text-focus.js | 74 | fabric の IText / Textbox は、入力用の 1px の textarea を |
+| js/core/util/fabric-text-focus.js | 99 | fabric の IText / Textbox は、入力用の 1px の textarea を |
 | js/core/util/fabric-util.js | 941 |  |
 | js/core/util/html-canvas-util.js | 91 | html-canvas-util.js - HTMLキャンバスに対する低レベル操作（境界検出、スケーリング、ピクセル処理） |
 | js/core/util/image-analyzer-util.js | 121 |  |
-| js/core/util/image-util.js | 845 | image-util.js - Fabric.js画像オブジェクトの処理（変換、WebP、クロップ、反転、色変換など） |
+| js/core/util/image-util.js | 847 | image-util.js - Fabric.js画像オブジェクトの処理（変換、WebP、クロップ、反転、色変換など） |
 | js/core/util/js-util.js | 20 |  |
 | js/core/util/load-util.js | 94 | ユーティリティ関数：エラーハンドリングとログ出力を行う |
 | js/core/util/log-util.js | 48 |  |
@@ -313,12 +313,12 @@
 | scripts/custom-brush-smoke-test.cjs | 44 |  |
 | scripts/cutout-color-key-smoke-test.py | 36 |  |
 | scripts/cutout-presets-smoke-test.cjs | 34 |  |
-| scripts/fabric-text-focus-smoke-test.cjs | 145 | fabric の編集用 textarea がスクロールを起こさないことを検証する。 |
+| scripts/fabric-text-focus-smoke-test.cjs | 240 | fabric の編集用 textarea がスクロールを起こさないことを検証する。 |
 | scripts/gen-project-index.cjs | 722 | プロジェクト索引の自動生成。 |
 | scripts/generate-original-starter-svgs.cjs | 326 |  |
 | scripts/generate-site-ui-svgs.cjs | 391 |  |
 | scripts/image-export-integration-test.cjs | 324 | 位深度と画素プレビューの統合テスト。 |
-| scripts/image-export-smoke-test.cjs | 403 |  |
+| scripts/image-export-smoke-test.cjs | 433 |  |
 | scripts/image2-interface-smoke-test.cjs | 19 |  |
 | scripts/layout-smoke-test.cjs | 201 |  |
 | scripts/make-one-click-zip.ps1 | 63 | Build a beginner zip without git history, secrets, or machine caches. |
